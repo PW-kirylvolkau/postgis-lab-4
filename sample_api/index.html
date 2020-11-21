@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+</head>
+<body style="font-size: 20px;">
+	<h3>Hi! When you click on the link below you will get a response in JSON format.</h3>
+	<h4>As I am lazy af I didn't add any real data to the orders and stations. I highly recommend you to think of some real data, as you will need to display it on the map. Including lat and lng. </h4>
+	<ul>
+		<li><a href="/vehicles">See vehicles list.</a></li>
+		<li><a href="/stations">See stations list.</a></li>
+		<li><a href="/orders">See orders list.</a></li>
+		<li><a href="/orders/1">See orders for vehicle 1.</a></li>
+		<li><a href="/orders/2">See orders for vehicle 2.</a></li>
+	</ul>
+	<h3>Notes</h3>
+	<ul>
+		<li>Please, try to do submit button everywhere as in <a href="/code_samples/index.js">this .js file.</a>
+			<ul>
+				<li>You can find html file here: <a href="/code_samples/index.html">index.html</a></li>
+			</ul>
+		</li>
+		<li><b style="color: red;">!!!IMPORTANT¡¡¡</b>We use github, similar to the last time, please, create branch and push there.</li>
+		<li>Your folder is WWWROOT.</li>
+		<li>Please, try to do a little bit every day. I will try to make some simple code review and open github issues at some points (and you are welcome too!), it will allow us to train Github skills and establish some professional communication.</li>
+		<li>When displaying orders on the map get firstly all cars, then call for each of them <b>/orders/${vehicle.id}</b> to get orders.</li>
+		<li>Please, don't forget that each car is assigned to some station (address of the station is given in the json response). Each car must come from and return to its station.</li>
+		<li>Try to use different marker styles and polyline colors for each car assigned to a station.</li>
+		<li>Please, use bootstrap if it is suitable for you. I really like the style consistency of our labs (said little pervert Kiryl).</li>
+	</ul>
+</body>
+</html>

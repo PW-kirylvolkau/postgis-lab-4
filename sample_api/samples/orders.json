@@ -1,0 +1,32 @@
+[
+	{
+		"id": 1,
+		"sender": "Kiryl",
+		"recipient": "Matthew",
+		"pickup_address": "Lahojski trak 10 Minsk, Belarus",
+		"delivery_address": "",
+		"package_weight": 50,
+		"lat": 44.4,
+		"lng": 44.4
+	},
+	{
+		"id": 2,
+		"sender": "Matthew",
+		"recipient_name": "Trump",
+		"pickup_address": "",
+		"delivery_address": "Lahojski trak 10 Minsk, Belarus",
+		"package_weight": 42,
+		"lat": 44.4,
+		"lng": 44.4
+	},
+	{
+		"id": 3,
+		"sender": "Trump",
+		"recipient": "Kiryl",
+		"pickup_address": "",
+		"delivery_address": "",
+		"package_weight": 99,
+		"lat": 44.4,
+		"lng": 44.4
+	}
+]

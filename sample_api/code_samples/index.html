@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>REST test</title>
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+	<div class="card m-3">
+		<div class="card-header">
+			<h3>Register package</h3>
+		</div>
+		<div class="card-body">
+			<form action="">
+				<input type="text" class="form-control mb-1" id="name" placeholder="Name"/>
+				<input type="text" class="form-control mb-1" id="surname" placeholder="Surname" />
+				<input type="number" class="form-control mb-1" id="weight" placeholder="Weight">
+				<select class="custom-select mb-1" id="city" required>
+					<option value="" selected disabled>Select city</option>
+					<option value="Cracow">Cracow</option>
+					<option value="Warsaw">Warsaw</option>
+				</select>
+				<input type="text" class="form-control mb-1" id="address" placeholder="Address"/>
+				<button type="submit" class="btn btn-success" id="submit">Submit</button>
+			</form>
+		</div>
+
+
+	</div>
+	<div class="card m-3">
+		<div class="card-header">
+			<h3>Table with packages</h3>
+		</div>
+		<div class="card-body">
+			<table class="table">
+				<thead>
+				<tr>
+					<th scope="col">#</th>
+					<th scope="col">Name</th>
+					<th scope="col">Surname</th>
+					<th scope="col">Weight</th>
+					<th scope="col">City</th>
+					<th scope="col">Address</th>
+				</tr>
+				</thead>
+				<tbody id="table">
+				</tbody>
+			</table>
+		</div>
+	<script type="application/javascript" src="./index.js"></script>
+</body>
+</html>

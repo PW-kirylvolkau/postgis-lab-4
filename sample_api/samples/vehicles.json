@@ -1,0 +1,14 @@
+[
+	{
+		"id": 1,
+		"name": "Minivan 1",
+		"capacity": 100,
+		"station_address": "8th Straco 46800 Puerto Vallarta, JAL MEXICO"
+	},
+	{
+		"id": 2,
+		"name": "Minivan 2",
+		"capacity": 50,
+		"station_address": "Логойский тракт 10 220113 Минск, Беларусь"
+	}
+]
