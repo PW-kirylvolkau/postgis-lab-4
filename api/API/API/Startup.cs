@@ -25,7 +25,8 @@ namespace API
             services.AddControllers();
             services.AddDbContext<ApplicationContext>(options =>
             {
-                options.UseNpgsql(Configuration.GetConnectionString("PG"));
+               // options.UseNpgsql(Configuration.GetConnectionString("PG"));
+               options.UseInMemoryDatabase("routes");
             });
 
             services.AddScoped<OrderDao>();
