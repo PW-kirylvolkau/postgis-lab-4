@@ -40,8 +40,8 @@ namespace API
             services.AddScoped<VehicleDao>();
             services.AddScoped<RouteDao>();
 
-            services.AddSingleton<RouteService>();
-            services.AddSingleton<VehicleService>();
+            services.AddScoped<RouteService>();
+            services.AddScoped<VehicleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -53,6 +53,8 @@ namespace API
             }
 
             app.UseHttpsRedirection();
+
+            app.UseStaticFiles();
 
             app.UseRouting();
 

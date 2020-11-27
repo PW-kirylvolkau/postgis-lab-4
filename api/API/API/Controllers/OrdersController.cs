@@ -8,12 +8,12 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class OrderController : ControllerBase
+    public class OrdersController : ControllerBase
     {
         private readonly OrderDao _dao;
         private readonly RouteService _routeService;
 
-        public OrderController(OrderDao dao, RouteService routeService)
+        public OrdersController(OrderDao dao, RouteService routeService)
         {
             _dao = dao;
             _routeService = routeService;
