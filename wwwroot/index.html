@@ -97,7 +97,7 @@
                                         <label class="low_labels" for="pquantity">QUANTITY</label>
                                     </div>
                                     <div class="col">
-                                        <input type="number" id="pquantity" name="pquantity" min="1" max="999" value="1" required>
+                                        <input type="number" id="pquantity" name="pquantity" min="1" max="999" value="1">
                                     </div>
                                 </div>
                                 <br />
@@ -129,19 +129,19 @@
                                         <label class="low_labels" for="plength">LENGTH</label>
                                     </div>
                                     <div class="col-md-auto">
-                                        <input type="text" name="plength" id="plength" placeholder="cm" maxlength="5" size="5" required>
+                                        <input type="text" name="plength" id="plength" placeholder="cm" maxlength="5" size="5">
                                     </div>
                                     <div class="col-md-auto">
                                         <label class="low_labels" for="pwidth">WIDTH</label>
                                     </div>
                                     <div class="col-md-auto">
-                                        <input type="text" name="pwidth" id="pwidth" placeholder="cm" maxlength="5" size="5" required>
+                                        <input type="text" name="pwidth" id="pwidth" placeholder="cm" maxlength="5" size="5">
                                     </div>
                                     <div class="col-md-auto">
                                         <label class="low_labels" for="pheight">HEIGHT</label>
                                     </div>
                                     <div class="col-md-auto">
-                                        <input type="text" name="pheight" id="pheight" placeholder="cm" maxlength="5" size="5" required>
+                                        <input type="text" name="pheight" id="pheight" placeholder="cm" maxlength="5" size="5">
                                     </div>
                                 </div>
                                 <br />
@@ -150,7 +150,7 @@
                                         <label class="low_labels" for="pvalue">VALUE(&#8364;)</label>
                                     </div>
                                     <div class="col">
-                                        <input type="number" name="pvalue" id="pvalue" min="1" max="99999" required>
+                                        <input type="number" name="pvalue" id="pvalue" min="1" max="99999">
                                     </div>
                                 </div>
                             </div>
@@ -180,7 +180,7 @@
                                         <label class="low_labels" for="sender_email">E-MAIL</label>
                                     </div>
                                     <div class="col">
-                                        <input id="sender_email" type="email" name="sender_email" required>
+                                        <input id="sender_email" type="email" name="sender_email">
                                     </div>
                                 </div>
                                 <br />
@@ -189,7 +189,7 @@
                                         <label class="low_labels" for="sender_phone">PHONE NUMBER</label>
                                     </div>
                                     <div class="col">
-                                        <input id="sender_phone" type="text" name="sender_phone" required>
+                                        <input id="sender_phone" type="text" name="sender_phone">
                                     </div>
                                 </div>
                                 <br />
@@ -222,11 +222,11 @@
                                         <h5 class="card-header">Select package delivery endpoints</h5>
                                         <br />
                                         <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" id="fromRadio" name="delivery" class="custom-control-input" />
+                                            <input type="radio" id="fromRadio" name="delivery" class="custom-control-input" checked="checked" onclick="mode=modes.from" />
                                             <label class="custom-control-label" for="fromRadio">From</label>
                                         </div>
                                         <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" name="delivery" id="toRadio" class="custom-control-input" />
+                                            <input type="radio" name="delivery" id="toRadio" class="custom-control-input" onclick="mode=modes.to"/>
                                             <label class="custom-control-label" for="toRadio">To</label>
                                         </div>
                                         <br />
@@ -238,12 +238,16 @@
                                             <div class="form-group col-md-12">
                                                 <label for="fromAddress">From</label>
                                                 <input type="text" class="form-control" id="fromAddress" placeholder="From" disabled required>
+                                                <input type="hidden" id="fromLatCoords" value="44" />
+                                                <input type="hidden" id="fromLngCoords" value="44" />
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
                                                 <label for="toAddress">To</label>
                                                 <input type="text" class="form-control" id="toAddress" placeholder="To" disabled required>
+                                                <input type="hidden" id="toLatCoords" value="44" />
+                                                <input type="hidden" id="toLngCoords" value="44" />
                                             </div>
                                         </div>
                                     </div>
@@ -262,11 +266,15 @@
         </div>
     </div>
     <!-- Javascript -->
+    <script src="formMethods.js" asp-append-version="true"></script>
     <script src="geocoding.js"></script>
     <script src="map_leaflet.js"></script>
     <script src="location.js"></script>
     <script src="index.js"></script>
     <script src="order_visuals.js"></script>
     <script src="formMethods.js"></script>
+    <script type="text/javascript">
+        getOrders();
+    </script>
 </body>
 </html>
