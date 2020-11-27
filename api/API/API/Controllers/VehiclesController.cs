@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data.Dao;
 using API.Models;
+using API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -14,10 +15,12 @@ namespace API.Controllers
     public class VehicleController : ControllerBase
     {
         private readonly VehicleDao _dao;
+        private readonly RouteService _routeService;
         
-        public VehicleController(VehicleDao dao)
+        public VehicleController(VehicleDao dao,RouteService routeService )
         {
             _dao = dao;
+            _routeService = routeService;
         }
 
         [HttpGet]
@@ -29,7 +32,9 @@ namespace API.Controllers
         [HttpPost]
         public ActionResult Add([FromBody] Vehicle vehicle)
         {
-            return _dao.Add(vehicle) ? Ok() : StatusCode(400);
+            var res = _dao.Add(vehicle) ? Ok() : StatusCode(400);
+            _routeService.RecomputeRoutes();
+            return res;
         }
     }
 }

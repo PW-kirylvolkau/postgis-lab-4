@@ -34,7 +34,7 @@ namespace API.Services
             var takenCapacity = 0.0;
             foreach (var vehicle in _vehicle.GetAll())
             {
-                
+                _vehicleService.ResetRoutes(vehicle);
                 while (takenCapacity <= vehicle.Capacity && idx < orders.Count)
                 {
                     _route.Add(new Route {Order = orders[idx]});
@@ -44,8 +44,9 @@ namespace API.Services
                     if (!_vehicleService.AppendRoute(vehicle, route));
                     takenCapacity += orders[idx].PackageWeight;
                     idx++;
-
                 }
+
+                takenCapacity = 0;
             }
         }
     }

@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.Data.Dao;
+using API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -38,8 +39,9 @@ namespace API
             services.AddScoped<StationDao>();
             services.AddScoped<VehicleDao>();
             services.AddScoped<RouteDao>();
-            
-            
+
+            services.AddSingleton<RouteService>();
+            services.AddSingleton<VehicleService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

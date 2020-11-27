@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using API.Data.Dao;
 using API.Models;
+using API.Services;
 using Microsoft.AspNetCore.Mvc;
 
 namespace API.Controllers
@@ -10,10 +11,12 @@ namespace API.Controllers
     public class OrderController : ControllerBase
     {
         private readonly OrderDao _dao;
+        private readonly RouteService _routeService;
 
-        public OrderController(OrderDao dao)
+        public OrderController(OrderDao dao, RouteService routeService)
         {
             _dao = dao;
+            _routeService = routeService;
         }
 
         [HttpGet]
@@ -26,6 +29,7 @@ namespace API.Controllers
         public ActionResult Add([FromBody] Order order)
         {
             if (!_dao.Add(order)) return BadRequest();
+            _routeService.RecomputeRoutes();
             return Ok();
         }
         /// <summary>
@@ -39,8 +43,9 @@ namespace API.Controllers
         {
             var order = _dao.Get(id);
             if (order == null) return NotFound();
-            
-            return _dao.Delete(order) ? NoContent() : StatusCode(418);
+            var res = _dao.Delete(order) ? NoContent() : StatusCode(418);
+            _routeService.RecomputeRoutes();
+            return res;
         }
         
     }

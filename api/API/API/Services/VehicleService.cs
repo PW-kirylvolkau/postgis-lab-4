@@ -32,5 +32,11 @@ namespace API.Services
             }
             return _vehicle.Update(vehicle);
         }
+
+        public bool ResetRoutes(Vehicle vehicle)
+        {
+            vehicle.Routes.Clear();
+            return _vehicle.Update(vehicle);
+        }
     }
 }
