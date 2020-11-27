@@ -23,7 +23,13 @@ namespace API.Controllers
         [HttpGet]
         public IEnumerable<Vehicle> GetAll()
         {
-            return _dao.GetAll().
+            return _dao.GetAll();
+        }
+
+        [HttpPost]
+        public ActionResult Add([FromBody] Vehicle vehicle)
+        {
+            return _dao.Add(vehicle) ? Ok() : StatusCode(400);
         }
     }
 }

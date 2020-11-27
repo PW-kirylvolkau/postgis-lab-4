@@ -34,7 +34,7 @@ namespace API.Data.Dao
             return _context.Stations.FirstOrDefault(s => s.Id == id);
         }
 
-        public IEnumerable<Station> GetAll()
+        public List<Station> GetAll()
         {
             return _context.Stations.ToList();
         }

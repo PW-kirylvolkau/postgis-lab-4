@@ -36,7 +36,7 @@ namespace API.Data.Dao
             return _context.Orders.FirstOrDefault(o => o.Id == id);
         }
 
-        public IEnumerable<Order> GetAll()
+        public List<Order> GetAll()
         {
             return _context.Orders.ToList();
         }

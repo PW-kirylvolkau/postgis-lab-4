@@ -9,7 +9,7 @@ namespace API.Data.Dao
         public bool Update(T obj);
         public bool Delete(T obj);
         public T Get(int id);
-        public IEnumerable<T> GetAll();
+        public List<T> GetAll();
         public bool Save();
     }
 }

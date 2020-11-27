@@ -36,9 +36,9 @@ namespace API.Data.Dao
             return _context.Vehicles.FirstOrDefault(v => v.Id == id);
         }
 
-        public IEnumerable<Vehicle> GetAll()
+        public List<Vehicle> GetAll()
         {
-            return _context.Vehicles.Include(e => e.Routes);
+            return _context.Vehicles.Include(e => e.Routes).ToList();
         }
 
         public bool Save()

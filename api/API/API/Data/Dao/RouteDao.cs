@@ -32,7 +32,7 @@ namespace API.Data.Dao
             throw new System.NotImplementedException();
         }
 
-        public IEnumerable<Route> GetAll()
+        public List<Route> GetAll()
         {
             throw new System.NotImplementedException();
         }

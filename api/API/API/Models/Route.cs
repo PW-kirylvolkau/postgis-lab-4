@@ -11,8 +11,5 @@ namespace API.Models
 
         [Required]
         public Order Order { get; set; }
-        
-        public int? NextId { get; set; }
-        public Route Next { get; set; }
     }
 }
