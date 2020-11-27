@@ -1,11 +1,12 @@
 using System.Collections.Generic;
+using System.Linq;
 using API.Models;
 
 namespace API.Data.Dao
 {
     public class RouteDao : IDao<Route>
     {
-        private ApplicationContext _context;
+        private readonly ApplicationContext _context;
 
         public RouteDao(ApplicationContext context)
         {
@@ -14,17 +15,20 @@ namespace API.Data.Dao
         
         public bool Add(Route obj)
         {
-            throw new System.NotImplementedException();
+            _context.Routes.Add(obj);
+            return Save();
         }
 
         public bool Update(Route obj)
         {
-            throw new System.NotImplementedException();
+            _context.Routes.Update(obj);
+            return Save();
         }
 
         public bool Delete(Route obj)
         {
-            throw new System.NotImplementedException();
+            _context.Routes.Remove(obj);
+            return Save();
         }
 
         public Route Get(int id)
@@ -34,12 +38,12 @@ namespace API.Data.Dao
 
         public List<Route> GetAll()
         {
-            throw new System.NotImplementedException();
+            return _context.Routes.ToList();
         }
 
         public bool Save()
         {
-            throw new System.NotImplementedException();
+            return _context.SaveChanges() >= 0;
         }
     }
 }

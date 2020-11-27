@@ -27,6 +27,14 @@ namespace API.Services
             _vehicleService = vehicleService;
         }
 
+        public void ClearRoutes()
+        {
+            foreach (var route in _route.GetAll())
+            {
+                _route.Delete(route);
+            }
+        }
+
         public void RecomputeRoutes()
         {
             var idx = 0;
