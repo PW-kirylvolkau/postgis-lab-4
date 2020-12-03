@@ -15,6 +15,7 @@ const popupSettings = {
 function initMaps() {
 	mymap = L.map('mapid').setView([51.505, -0.09], 13);
 	addTileLayer();
+	addMapEventHandlers();
 }
 
 function addTileLayer() {
@@ -36,7 +37,7 @@ function addMapEventHandlers() {
         if (mode === modes.to) {
             addToMarker(e.latlng);
         }
-    });
+	});
 }
 
 function addFromMarker(position) {
@@ -47,9 +48,16 @@ function addFromMarker(position) {
 		fromMarker = new L.marker(position, markerSettings).addTo(mymap);
 		fromMarker.bindPopup(popupTexts.from, popupSettings).openPopup();
 		fromMarker.on('move', addPolyline);
-		addPolyline();
+		addPolyline
+		fromMarker.on('dragend', () => {
+			getAddresFromCoords(fromMarker.getLatLng().lat, fromMarker.getLatLng().lng, fromInput);
+			pickup_lat_tb.value = fromMarker.getLatLng().lat;
+			pickup_lng_tb.value = fromMarker.getLatLng().lng;
+		});
 	}
 	getAddresFromCoords(position.lat, position.lng, fromInput);
+	pickup_lat_tb.value = position.lat;
+	pickup_lng_tb.value = position.lng;
 }
 
 function addToMarker(position) {
@@ -61,8 +69,15 @@ function addToMarker(position) {
 		toMarker.bindPopup(popupTexts.to, popupSettings).openPopup();
 		toMarker.on('move', addPolyline);
 		addPolyline();
+		toMarker.on('dragend', () => {
+			getAddresFromCoords(toMarker.getLatLng().lat, toMarker.getLatLng().lng, toInput);
+			pickup_lat_tb.value = toMarker.getLatLng().lat;
+			pickup_lng_tb.value = toMarker.getLatLng().lng;
+		});
 	}
 	getAddresFromCoords(position.lat, position.lng, toInput);
+	delivery_lat_tb.value = position.lat;
+	delivery_lng_tb.value = position.lng;
 }
 
 function addPolyline() {

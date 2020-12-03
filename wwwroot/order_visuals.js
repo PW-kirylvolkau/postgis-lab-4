@@ -11,7 +11,7 @@ function onHandButtonClick() {
 		handButton.classList.remove('btn-secondary');
 		handButton.classList.add('btn-primary');
 	}
-	addMapEventHandlers();
+	//addMapEventHandlers();
 	toInput.setAttribute('disabled', 'true');
 	fromInput.setAttribute('disabled', 'true');
 	toRadio.removeAttribute('disabled');
@@ -26,7 +26,7 @@ function onTextButtonClick() {
 		textButton.classList.remove('btn-secondary');
 		textButton.classList.add('btn-primary');
 	}
-	clearMap();
+	//clearMap();
 	toInput.removeAttribute('disabled');
 	fromInput.removeAttribute('disabled');
 	toRadio.setAttribute('disabled', 'true');

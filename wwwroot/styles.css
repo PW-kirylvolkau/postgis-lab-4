@@ -48,3 +48,22 @@ button.location-button {
 #editForm{
     display: none;
 }
+
+
+.list-group{
+    max-height: 400px;
+    margin-bottom: 10px;
+    overflow: auto;
+}
+
+#map-grl {
+    width: 100%;
+    height: 500px;
+    box-shadow: 0 0 6px #000000;
+}
+
+#map-no {
+    width: 400px;
+    height: 400px;
+    box-shadow: 0 0 6px #000000;
+}
