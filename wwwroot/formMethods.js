@@ -1,11 +1,13 @@
-const uri = '';
-let allOrders = [];
+
 
 function getOrders() {
-    fetch(uri)
+    $.getJSON("orders.js", function (orders) {
+        console.log("JSON data: " + orders[0].sender);
+    });
+    /*fetch(uri)
         .then(response => response.json())
         .then(data => tableAddOrders(data))
-        .catch(error => console.error('Unable to get orders.', error))
+        .catch(error => console.error('Unable to get orders.', error))*/
 }
 
 function addNewOrder() {
@@ -110,5 +112,5 @@ function tableAddOrders(data) {
         td8.appendChild(deleteButton);
     });
 
-    allOrders = data;
+    //allOrders = data;
 }

@@ -17,6 +17,9 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles.css">
     <title>Front-End</title>
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <script type="text/javascript" src="orders.json"></script>
 </head>
 <body id="main">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -39,15 +42,20 @@
     <div class="tab-content" id="pageContents">
         <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
             <div class="container p-3 my-3">
-                <div class="column">
-                    <div class="card">
-                        <h3 class="card-title">Order</h3>
-                        <!--Order Content-->
-                        <!--Button-->
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card">
+                            <h3 class="card-title">Order</h3>
+                            <!--Order Content-->
+                            <!--Button-->
+                            <div class="list-group" id="order-list-tab" role="tablist"></div>
+                        </div>
                     </div>
-                </div>
-                <div class="column">
-                    <!--Map-->
+                    <div class="col-8">
+                        <!--Map-->
+                        <div id="map-grl"></div>
+                        <script src="map_grl_code.js"></script>
+                    </div>
                 </div>
             </div>
             <br />
@@ -56,8 +64,14 @@
                     <h3 class="card-title">Edit Order</h3>
                     <div class="card-body">
                         <form action="javascript:void(0);" onsubmit="updateOrder()">
-                            <!--Inputs here for any things to edit-->
-                        </form>
+                            <input type="hidden" id="edit-id" />
+                            <input type="text" id="sender-edit" />
+                            <input type="text" id="recipient-edit"/>
+                            <input type="text" id="pickupAddress-edit" />
+                            <input type="text" id="deliveryAddress-edit" />
+                            <input type="number" id="weight-edit" />
+                            <input type="submit" value="Save" />
+                          </form>
                     </div>
                 </div>
             </div>
@@ -207,16 +221,17 @@
                                 Text selection
                             </button>
                         </div>
-                        <div class="card-body">
-                            <div class="column left-column">
+                        <div class="card-body row">
+                            <div class="col-8">
                                 <button class="btn btn-primary location-button" id="location-button" onclick="getCurrentLocation()">Get my location</button>
                                 <br />
                                 <br />
-                                <div class="map-wrapper">
-                                    <div id="mapid"></div>
+                                <div class="container-md p-3 my-3">
+                                    <div id="map-no"></div>
+                                    <script src="map_no_code.js"></script>
                                 </div>
                             </div>
-                            <div class="column right-column">
+                            <div class="col-4">
                                 <div class="card text-dark bg-light mb-10 pr-10" style="max-width: 50rem">
                                     <div class="card-body">
                                         <h5 class="card-header">Select package delivery endpoints</h5>
@@ -276,5 +291,6 @@
     <script type="text/javascript">
         getOrders();
     </script>
+    <script src="order_list_fill.js"></script>
 </body>
 </html>
