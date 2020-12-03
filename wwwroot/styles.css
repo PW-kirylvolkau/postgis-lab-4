@@ -1,0 +1,50 @@
+﻿#mapid{
+    height: 500px;
+    width: 500px;
+}
+
+.map-wrapper {
+    width: 500px;
+    box-shadow: 0 0 6px #000000;
+}
+
+button.location-button {
+    margin: 20px 0px 0px 0px;
+}
+
+.column {
+    float: left;
+    width: 50%;
+}
+
+#main:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.right-column {
+    padding: 10px 20px 0px 100px;
+}
+
+.left-column {
+    padding: 10px 0px 50px 50px;
+}
+
+#hand-button {
+    border-radius: 15px 0px 0px 15px;
+}
+
+#text-button {
+    border-radius: 0px 15px 15px 0px;
+}
+
+
+.low_labels {
+    color: grey;
+}
+
+
+#editForm{
+    display: none;
+}
