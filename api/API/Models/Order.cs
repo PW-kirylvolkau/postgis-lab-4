@@ -11,9 +11,21 @@ namespace API.Models
 
         [Required]
         public string PickupAddress { get; set; }
+        
+        [Required, Range(-90, 90)]
+        public double PickupLat { get; set; }
+
+        [Required, Range(-180, 180)]
+        public double PickupLng { get; set; }
 
         [Required]
         public string DeliveryAddress { get; set; }
+        
+        [Required, Range(-90, 90)]
+        public double DeliveryLat { get; set; }
+
+        [Required, Range(-180, 180)]
+        public double DeliveryLng { get; set; }
         
         [Required]
         public string Sender { get; set; }
