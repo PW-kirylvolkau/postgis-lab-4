@@ -1,9 +1,6 @@
 
 
 function getOrders() {
-    $.getJSON("orders.js", function (orders) {
-        console.log("JSON data: " + orders[0].sender);
-    });
     /*fetch(uri)
         .then(response => response.json())
         .then(data => tableAddOrders(data))
