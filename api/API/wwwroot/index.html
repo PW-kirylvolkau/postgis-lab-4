@@ -17,6 +17,9 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles.css">
     <title>Front-End</title>
+    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
+    <script type="text/javascript" src="orders.json"></script>
 </head>
 <body id="main">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -39,15 +42,41 @@
     <div class="tab-content" id="pageContents">
         <div class="tab-pane fade show active" id="general" role="tabpanel" aria-labelledby="general-tab">
             <div class="container p-3 my-3">
-                <div class="column">
-                    <div class="card">
-                        <h3 class="card-title">Order</h3>
-                        <!--Order Content-->
-                        <!--Button-->
+                <div class="row">
+                    <div class="col-4">
+                        <div class="card">
+                            <h3 class="card-title">Order</h3>
+                            <!--Order List-->
+                            <div class="list-group" id="order-list-tab" role="tablist"></div>
+                            <br />
+                            <button id="view-order-button" class="btn btn-primary" data-toggle="modal" data-target="#view-order-modal" onclick="displayOrderView()">View Order</button>
+                            <!--Creation of Modal for viewing order-->
+                            <div class="modal fade" id="view-order-modal" tabindex="1" role="dialog" aria-labelledby="view-order-modal" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="modal-label">View Order</h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <!--Popup content which should have all the info about the order-->
+                                            <p id="popup-content"></p>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                </div>
-                <div class="column">
-                    <!--Map-->
+                    <div class="col-8">
+                        <!--Map-->
+                        <div id="map-grl"></div>
+                        <script src="map_grl_code.js"></script>
+                    </div>
                 </div>
             </div>
             <br />
@@ -56,8 +85,15 @@
                     <h3 class="card-title">Edit Order</h3>
                     <div class="card-body">
                         <form action="javascript:void(0);" onsubmit="updateOrder()">
-                            <!--Inputs here for any things to edit-->
-                        </form>
+                            <!--Edit Form (still need to add exactly what will be available to edit, as well as the function to update info)-->
+                            <input type="hidden" id="edit-id" />
+                            <input type="text" id="sender-edit" />
+                            <input type="text" id="recipient-edit"/>
+                            <input type="text" id="pickupAddress-edit" />
+                            <input type="text" id="deliveryAddress-edit" />
+                            <input type="number" id="weight-edit" />
+                            <input type="submit" value="Save" />
+                          </form>
                     </div>
                 </div>
             </div>
@@ -65,6 +101,7 @@
                 <div class="card">
                     <h3 class="card-title">Order Table</h3>
                     <div class="card-body">
+                        <!--Table that displays all current orders in the database-->
                         <table class="table">
                             <thead>
                                 <tr>
@@ -97,7 +134,7 @@
                                         <label class="low_labels" for="pquantity">QUANTITY</label>
                                     </div>
                                     <div class="col">
-                                        <input type="number" id="pquantity" name="pquantity" min="1" max="999" value="1" required>
+                                        <input type="number" id="pquantity" name="pquantity" min="1" max="999" value="1">
                                     </div>
                                 </div>
                                 <br />
@@ -129,19 +166,19 @@
                                         <label class="low_labels" for="plength">LENGTH</label>
                                     </div>
                                     <div class="col-md-auto">
-                                        <input type="text" name="plength" id="plength" placeholder="cm" maxlength="5" size="5" required>
+                                        <input type="text" name="plength" id="plength" placeholder="cm" maxlength="5" size="5">
                                     </div>
                                     <div class="col-md-auto">
                                         <label class="low_labels" for="pwidth">WIDTH</label>
                                     </div>
                                     <div class="col-md-auto">
-                                        <input type="text" name="pwidth" id="pwidth" placeholder="cm" maxlength="5" size="5" required>
+                                        <input type="text" name="pwidth" id="pwidth" placeholder="cm" maxlength="5" size="5">
                                     </div>
                                     <div class="col-md-auto">
                                         <label class="low_labels" for="pheight">HEIGHT</label>
                                     </div>
                                     <div class="col-md-auto">
-                                        <input type="text" name="pheight" id="pheight" placeholder="cm" maxlength="5" size="5" required>
+                                        <input type="text" name="pheight" id="pheight" placeholder="cm" maxlength="5" size="5">
                                     </div>
                                 </div>
                                 <br />
@@ -150,7 +187,7 @@
                                         <label class="low_labels" for="pvalue">VALUE(&#8364;)</label>
                                     </div>
                                     <div class="col">
-                                        <input type="number" name="pvalue" id="pvalue" min="1" max="99999" required>
+                                        <input type="number" name="pvalue" id="pvalue" min="1" max="99999">
                                     </div>
                                 </div>
                             </div>
@@ -162,7 +199,7 @@
                                         <label class="low_labels" for="sender_name">NAME</label>
                                     </div>
                                     <div class="col">
-                                        <input id="sender_name" type="text" name="sender_name" required>
+                                        <input id="sender_name" type="text" name="sender_name" >
                                     </div>
                                 </div>
                                 <br />
@@ -171,7 +208,7 @@
                                         <label class="low_labels" for="sender_surname">SURNAME</label>
                                     </div>
                                     <div class="col">
-                                        <input id="sender_surname" type="text" name="sender_surname" required>
+                                        <input id="sender_surname" type="text" name="sender_surname" >
                                     </div>
                                 </div>
                                 <br />
@@ -180,7 +217,7 @@
                                         <label class="low_labels" for="sender_email">E-MAIL</label>
                                     </div>
                                     <div class="col">
-                                        <input id="sender_email" type="email" name="sender_email" required>
+                                        <input id="sender_email" type="email" name="sender_email">
                                     </div>
                                 </div>
                                 <br />
@@ -189,7 +226,7 @@
                                         <label class="low_labels" for="sender_phone">PHONE NUMBER</label>
                                     </div>
                                     <div class="col">
-                                        <input id="sender_phone" type="text" name="sender_phone" required>
+                                        <input id="sender_phone" type="text" name="sender_phone">
                                     </div>
                                 </div>
                                 <br />
@@ -207,26 +244,27 @@
                                 Text selection
                             </button>
                         </div>
-                        <div class="card-body">
-                            <div class="column left-column">
+                        <div class="card-body row">
+                            <div class="col-8">
                                 <button class="btn btn-primary location-button" id="location-button" onclick="getCurrentLocation()">Get my location</button>
                                 <br />
                                 <br />
-                                <div class="map-wrapper">
-                                    <div id="mapid"></div>
+                                <div class="container-md p-3 my-3">
+                                    <div id="map-no"></div>
+                                    <script src="map_no_code.js"></script>
                                 </div>
                             </div>
-                            <div class="column right-column">
+                            <div class="col-4">
                                 <div class="card text-dark bg-light mb-10 pr-10" style="max-width: 50rem">
                                     <div class="card-body">
                                         <h5 class="card-header">Select package delivery endpoints</h5>
                                         <br />
                                         <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" id="fromRadio" name="delivery" class="custom-control-input" />
+                                            <input type="radio" id="fromRadio" name="delivery" class="custom-control-input" checked="checked" onclick="mode=modes.from" />
                                             <label class="custom-control-label" for="fromRadio">From</label>
                                         </div>
                                         <div class="custom-control custom-radio custom-control-inline">
-                                            <input type="radio" name="delivery" id="toRadio" class="custom-control-input" />
+                                            <input type="radio" name="delivery" id="toRadio" class="custom-control-input" onclick="mode=modes.to" />
                                             <label class="custom-control-label" for="toRadio">To</label>
                                         </div>
                                         <br />
@@ -234,18 +272,25 @@
                                         <select id="country" class="form-control" onchange="getCountryCoords(this.value)"></select>
                                         <br />
                                         <h5 class="card-title">Selected points should be shown as addresses in the corresponing boxes.</h5>
+                                        <!--Inputs for inserting addresses in form of text (contains geoapify code)-->
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
                                                 <label for="fromAddress">From</label>
-                                                <input type="text" class="form-control" id="fromAddress" placeholder="From" disabled required>
+                                                <div class="autocomplete-container" id="autocomplete-container-from"></div>
+                                                <input type="hidden" id="fromLatCoords" value="44" />
+                                                <input type="hidden" id="fromLngCoords" value="44" />
                                             </div>
                                         </div>
                                         <div class="form-row">
                                             <div class="form-group col-md-12">
                                                 <label for="toAddress">To</label>
-                                                <input type="text" class="form-control" id="toAddress" placeholder="To" disabled required>
+                                                <div class="autocomplete-container" id="autocomplete-container-to"></div>
+                                                <input type="hidden" id="toLatCoords" value="44" />
+                                                <input type="hidden" id="toLngCoords" value="44" />
                                             </div>
                                         </div>
+                                        <!--Script containing the code for geoapify-->
+                                        <script src="geoapify_code.js"></script>
                                     </div>
                                 </div>
                             </div>
@@ -258,7 +303,7 @@
             </form>
         </div>
         <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
-            <p>nigga3</p>
+            <p>Tab 3</p>
         </div>
     </div>
     <!-- Javascript -->
@@ -267,6 +312,10 @@
     <script src="location.js"></script>
     <script src="index.js"></script>
     <script src="order_visuals.js"></script>
-    <script src="formMethods.js"></script>
+    <script src="order_formMethods.js"></script>
+    <script type="text/javascript">
+        getOrders();
+    </script>
+    <script src="order_list_fill.js"></script>
 </body>
 </html>
