@@ -2,7 +2,7 @@
 
 
 const uri = "/api/Orders";
-
+let allOrders = [];
 //GET Orders
 
 function getOrders() {
@@ -13,12 +13,31 @@ function getOrders() {
 }
 
 
+//Display the edit form
+function displayEditForm(id) {
+    const currentOrder = allOrders.find(order => order.Id === id);
+    console.log(currentOrder);
+    document.getElementById('sender-fname-edit').value = currentOrder.sender;
+    document.getElementById('recipient-fname-edit').value = currentOrder.recipient;
+    document.getElementById('pickupAddress-edit').value = currentOrder.pickupAddress;
+    document.getElementById('pickup-Lat-edit').value = currentOrder.pickupLat;
+    document.getElementById('pickup-Lon-edit').value = currentOrder.pickupLng;
+    document.getElementById('deliveryAddress-edit').value = currentOrder.deliveryAddress
+    document.getElementById('delivery-Lat-edit').value = currentOrder.deliveryLat;
+    document.getElementById('delivery-Lon-edit').value = currentOrder.deliveryLng;
+    document.getElementById('packageWeight-edit').value = currentOrder.packageWeight;
+    document.getElementById('editForm').style.display = "block";
 
+}
 //PUT (Update) Orders
-function editOrder(id) {
-    console.log(id);
+function editOrder() {
+    console.log();
 }
 
+//Close edit form 
+function closeInput() {
+    document.getElementById('editForm').style.display = 'none';
+}
 
 //DELETE Orders
 function deleteOrder(id) {
@@ -68,15 +87,18 @@ function tableAddOrders(data) {
         let editButton = button.cloneNode(false);
         editButton.innerText = 'Edit';
         editButton.setAttribute('class', 'btn btn-primary');
-        editButton.setAttribute('onclick', `editOrder(${order.id})`);
+        editButton.setAttribute('onclick', `displayEditForm(${order.Id})`);
         let td7 = tr.insertCell(6);
         td7.appendChild(editButton);
 
         let deleteButton = button.cloneNode(false);
         deleteButton.innerText = 'Delete';
         deleteButton.setAttribute('class', 'btn btn-danger');
-        deleteButton.setAttribute('onclick', `deleteOrder(${order.id})`);
+        deleteButton.setAttribute('onclick', `deleteOrder(${order.Id})`);
         let td8 = tr.insertCell(7);
         td8.appendChild(deleteButton);
     });
+
+
+    allOrders = data;
 }

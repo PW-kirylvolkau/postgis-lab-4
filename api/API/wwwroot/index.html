@@ -86,14 +86,67 @@
                     <div class="card-body">
                         <form action="javascript:void(0);" onsubmit="updateOrder()">
                             <!--Edit Form (still need to add exactly what will be available to edit, as well as the function to update info)-->
-                            <input type="hidden" id="edit-id" />
-                            <input type="text" id="sender-edit" />
-                            <input type="text" id="recipient-edit"/>
-                            <input type="text" id="pickupAddress-edit" />
-                            <input type="text" id="deliveryAddress-edit" />
-                            <input type="number" id="weight-edit" />
-                            <input type="submit" value="Save" />
-                          </form>
+                            <div class="container p-3 my-3">
+                                <input type="hidden" id="edit-id" />
+                                <div class="row">
+                                    <div class="col-4">
+                                        <h5>Sender Information</h5>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <label class="low_labels" for="sender-fname-edit">Name and Surname</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" id="sender-fname-edit" name="sender-fname-edit" />
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <br />
+                                        <h5>Recipient Information</h5>
+                                        <br />
+                                        <div class="row">
+                                            <div class="col-3">
+                                                <label class="low_labels" for="recipient-fname-edit">Name and Surname</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="text" id="recipient-fname-edit" name="recipient-fname-edit" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>Pickup Address</h5>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="autocomplete-container" id="autocomplete-container-pickup-edit"></div>
+                                                <input type="hidden" id="pickup-Lat-edit" />
+                                                <input type="hidden" id="pickup-Lon-edit"/>
+                                            </div>
+                                        </div>
+                                        <br />
+                                        <h5>Delivery Address</h5>
+                                        <div class="row">
+                                            <div class="col">
+                                                <div class="autocomplete-container" id="autocomplete-container-delivery-edit"></div>
+                                                <input type="hidden" id="delivery-Lat-edit" />
+                                                <input type="hidden" id="delivery-Lon-edit" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-4">
+                                        <h5>Package Details</h5>
+                                        <div class="row">
+                                            <div class="col">
+                                                <label class="low_labels" for="packageWeight-edit">Package Weight</label>
+                                            </div>
+                                            <div class="col">
+                                                <input type="number" name="packageWeight-edit" id="packageWeight-edit" min="1" max="100" value="1">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <input class="btn btn-success" type="submit" value="Save" onclick="updateOrder()"/>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -157,7 +210,7 @@
                                         <label class="low_labels" for="pweight">WEIGHT(KG)</label>
                                     </div>
                                     <div class="col">
-                                        <input type="number" name="pweight" id="pweight" min="1" max="100" value="1" required>
+                                        <input type="number" name="pweight" id="pweight" min="1" max="100" value="1">
                                     </div>
                                 </div>
                                 <br />

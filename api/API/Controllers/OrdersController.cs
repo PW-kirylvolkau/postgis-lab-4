@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/Orders")]
     public class OrdersController : ControllerBase
     {
         private readonly OrderDao _dao;
@@ -38,7 +38,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete]
+        [HttpDelete("{Id}")]
         public ActionResult Delete(int id)
         {
             var order = _dao.Get(id);
