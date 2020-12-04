@@ -2,6 +2,7 @@ function displayRoutes() {
     map_grl.eachLayer((layer) => {
         layer.remove();
     });
+    initGeneralMap();
     fetch('api/vehicle')
         .then(res => res.json())
         .then(json => {
