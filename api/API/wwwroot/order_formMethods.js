@@ -3,6 +3,7 @@
 
 const uri = "/api/Orders";
 let allOrders = [];
+let currentOrder;
 //GET Orders
 
 function getOrders() {
@@ -17,9 +18,7 @@ function getOrders() {
 function getOrder(id) {
     fetch(`${uri}/${id}`)
         .then(response => response.json())
-        .then(data => {
-            return data;
-        })
+        .then(data => returnDataValue(data))
         .catch(error => console.error('Unable to get order.', error));
 }
 
@@ -190,4 +189,11 @@ function tableAddOrders(data) {
     });
     allOrders = data;
     addListItems();
+}
+
+
+
+function returnDataValue(data) {
+    currentOrder = data;
+    console.log(currentOrder);
 }
