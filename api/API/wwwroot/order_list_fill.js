@@ -1,8 +1,11 @@
 
 
+
+
 //Adding orders to a list of selectable items
 //Necessary interaction between a function that gets items from DB
 function addListItems() {
+    deleteListItems();
     const list_view = document.getElementById('order-list-tab');
     allOrders.forEach(order => {
         let order_tab = document.createElement('a');
@@ -28,9 +31,11 @@ function displayOrderView() {
     for (i = 0; i < list.length; i++) {
         if (list[i].getAttribute('class').indexOf('active') !== -1) {
             document.getElementById('error-message').style.display = "none";
-            let stringArr = list[i].getAttribute('id').split("-"); 
-            console.log(stringArr);
-            let order = getOrder(parseInt(stringArr[2],10));
+            let stringArr = list[i].getAttribute('id').split("-");
+            const orderElementId = parseInt(stringArr[2]);
+            console.log(orderElementId);
+            getOrder(orderElementId);
+            let order = currentOrder;
             document.getElementById('sender-content').innerHTML = order.sender;
             document.getElementById('recipient-content').innerHTML = order.recipient;
             document.getElementById('pickup-content').innerHTML = order.pickupAddress;
@@ -39,5 +44,11 @@ function displayOrderView() {
             break;
         }
     }
+}
 
+function deleteListItems() {
+    const list_view = document.getElementById('order-list-tab');
+    while (list_view.firstChild) {
+        list_view.removeChild(list_view.lastChild);
+    }
 }
