@@ -38,7 +38,6 @@ function addNewOrder() {
         },
         body: JSON.stringify(order)
     })
-        .then(response => response.json())
         .then(() => {
             senderNameTB.value = '';
             senderSurTB.value = '';

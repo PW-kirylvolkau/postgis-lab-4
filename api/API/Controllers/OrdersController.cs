@@ -38,7 +38,7 @@ namespace API.Controllers
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        [HttpDelete("{Id}")]
+        [HttpDelete("{id}")]
         public ActionResult Delete(int id)
         {
             var order = _dao.Get(id);
@@ -48,7 +48,7 @@ namespace API.Controllers
             return res;
         }
 
-        [HttpGet]
+        [HttpGet("{id}")]
         public ActionResult<Order> GetOrder(int id)
         {
             var order = _dao.Get(id);
