@@ -1,6 +1,7 @@
 //Methods for communication with the DB for stations
 
 const uriStations = "/api/Station";
+let allStations = [];
 
 //GET stations method
 function getStations() {
@@ -47,6 +48,7 @@ function addNewStation() {
 
 
 function tableAddStations(data) {
+    allStations = data;
     const tBody = document.getElementById('stationTable');
     tBody.innerHTML = '';
     let textNode;

@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
+    [Route("api/Vehicle")]
     public class VehicleController : ControllerBase
     {
         private readonly VehicleDao _dao;
