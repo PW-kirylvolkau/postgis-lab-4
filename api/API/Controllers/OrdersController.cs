@@ -57,7 +57,7 @@ namespace API.Controllers
         }
 
         [HttpPut("{id}")]
-        public ActionResult<Order> UpdateOrder(Order order)
+        public ActionResult<Order> UpdateOrder([FromBody] Order order)
         {
             if (!_dao.Update(order)) return BadRequest();
             return _dao.Get(order.Id);
