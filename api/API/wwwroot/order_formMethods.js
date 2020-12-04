@@ -51,7 +51,6 @@ function addNewOrder() {
         },
         body: JSON.stringify(newOrder)
     })
-        .then(response => response.json())
         .then(() => {
             getOrders();
             sNameTextbox.value = '';
@@ -59,11 +58,11 @@ function addNewOrder() {
             rNameTextbox.value = '';
             rSurnameTextbox.value = '';
             fromAddressTextbox.value = '';
-            fromLatTextbox = '';
-            fromLngTextbox = '';
+            fromLatTextbox.value = '';
+            fromLngTextbox.value = '';
             toAddressTextbox.value = '';
-            toLatTextbox = '';
-            toLngTextbox = '';
+            toLatTextbox.value = '';
+            toLngTextbox.value = '';
             pWeightTextBox.value = 1;
         })
         .catch(error => console.error('Unable to add order.', error));
