@@ -12,6 +12,58 @@ function getOrders() {
         .catch(error => console.error('Unable to get orders.', error));
 }
 
+//POST Orders
+function addNewOrder() {
+    //All necessary forms
+    const sNameTextbox = document.getElementById('sender_name');
+    const sSurnameTextbox = document.getElementById('sender_surname');
+    const rNameTextbox = document.getElementById('recipient_name');
+    const rSurnameTextbox = document.getElementById('recipient_surname');
+    const pWeightTextBox = document.getElementById('pweight');
+    const fromLatTextbox = document.getElementById('fromLatCoords');
+    const fromLngTextbox = document.getElementById('fromLngCoords');
+    const toLatTextbox = document.getElementById('toLatCoords');
+    const toLngTextbox = document.getElementById('toLngCoords');
+
+    const newOrder = {
+        sender: sNameTextbox.value.trim() + " " + sSurnameTextbox.value.trim(),
+        recipient: rNameTextbox.value.trim() + " " + rSurnameTextbox.value.trim(),
+        pickupAddress: fromInput.value.trim(),
+        deliveryAddress: toInput.value.trim(),
+        packageWeight: parseFloat(pWeightTextBox.value.trim()),
+        pickupLat: parseFloat(fromLatTextbox.value.trim()),
+        pickupLng: parseFloat(fromLngTextbox.value.trim()),
+        deliveryLat: parseFloat(toLatTextbox.value.trim()),
+        deliveryLng: parseFloat(toLngTextbox.value.trim())
+    }
+    console.log(newOrder);
+
+    fetch(uri, {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newOrder)
+    })
+        .then(response => response.json())
+        .then(() => {
+            getOrders();
+            sNameTextbox.value = '';
+            sSurnameTextbox.value = '';
+            rNameTextbox.value = '';
+            rSurnameTextbox.value = '';
+            fromInput.value = '';
+            fromLatTextbox = '';
+            fromLngTextbox = '';
+            toInput.value = '';
+            toLatTextbox = '';
+            toLngTextbox = '';
+            pWeightTextBox.value = 1;
+        })
+        .catch(error => console.error('Unable to add order.', error));
+}
+
 
 //Display the edit form
 function displayEditForm(id) {
