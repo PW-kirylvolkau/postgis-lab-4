@@ -1,4 +1,3 @@
-
 let map_grl;
 
 function initGeneralMap() {
