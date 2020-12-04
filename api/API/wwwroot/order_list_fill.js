@@ -1,7 +1,3 @@
-
-
-
-
 //Adding orders to a list of selectable items
 //Necessary interaction between a function that gets items from DB
 function addListItems() {

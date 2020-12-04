@@ -19,7 +19,6 @@
     <title>Front-End</title>
     <!--<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>-->
     <!--<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />-->
-
     <!--Declaration of the Methods or the forms of the objects type Order-->
     <script src="order_formMethods.js"></script>
     <script src="station_formMethods.js"></script>
@@ -27,6 +26,8 @@
 
     <!--Script containing the code for geoapify-->
     <script src="geoapify_code.js"></script>
+    <script src="geocoding.js"></script>
+
 </head>
 <body id="main">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -302,13 +303,14 @@
                         </div>
                         <div class="card-body row">
                             <div class="col-8">
-                                <button class="btn btn-primary location-button" id="location-button" onclick="getCurrentLocation()">Get my location</button>
+                                <button type="button" class="btn btn-primary location-button" id="location-button" onclick="getCurrentLocation()">Get my location</button>
                                 <br />
                                 <br />
-                                <div class="container-md p-3 my-3">
-                                    <div id="map-no"></div>
-                                    <script src="map_no_code.js"></script>
+                                <div class="map-wrapper">
+                                    <div id="mapid"></div>
                                 </div>
+                                <!--Script for map in orders-->
+                                <!--<script src="map_no_code.js"></script>-->
                             </div>
                             <div class="col-4">
                                 <div class="card text-dark bg-light mb-10 pr-10" style="max-width: 50rem">
@@ -345,7 +347,6 @@
                                                 <input type="hidden" id="toLngCoords" value="44" />
                                             </div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -375,7 +376,7 @@
                                         <label class="low_labels" for="station_name">Name</label>
                                     </div>
                                     <div class="col">
-                                        <input class="form-control" type="text" id="station_name" name="station_name" placeholder="Enter station name..."/>
+                                        <input class="form-control" type="text" id="station_name" name="station_name" placeholder="Enter station name..." />
                                     </div>
                                 </div>
                                 <br />
@@ -459,8 +460,7 @@
         </div>
     </div>
     <!-- Javascript -->
-    <script src="geocoding.js"></script>
-    <!--<script src="map_leaflet.js"></script>-->
+    <script src="map_leaflet.js"></script>
     <script src="location.js"></script>
     <script src="index.js"></script>
     <script src="order_visuals.js"></script>
