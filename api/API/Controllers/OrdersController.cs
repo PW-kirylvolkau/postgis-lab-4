@@ -47,6 +47,21 @@ namespace API.Controllers
             _routeService.RecomputeRoutes();
             return res;
         }
+
+        [HttpGet]
+        public ActionResult<Order> GetOrder(int id)
+        {
+            var order = _dao.Get(id);
+            if (order == null) return NotFound();
+            return order;
+        }
+
+        [HttpPut]
+        public ActionResult<Order> UpdateOrder(Order order)
+        {
+            if (!_dao.Update(order)) return BadRequest();
+            return _dao.Get(order.Id);
+        }
         
     }
 }
