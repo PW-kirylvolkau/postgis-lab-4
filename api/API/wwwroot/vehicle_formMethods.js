@@ -1,5 +1,5 @@
 //Methods for communication with the DB for stations
-const uriVehicles = "/api/Vehicle";
+const uriVehicles = "api/Vehicle";
 let allVehicles = [];
 
 //GET stations method
@@ -41,7 +41,6 @@ function addNewVehicle() {
     fetch(uriVehicles, {
         method: 'POST',
         headers: {
-            'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(newVehicle)

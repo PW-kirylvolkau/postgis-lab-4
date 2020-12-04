@@ -11,7 +11,7 @@ using Microsoft.Extensions.Logging;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/Vehicle")]
+    [Route("api/[controller]")]
     public class VehicleController : ControllerBase
     {
         private readonly VehicleDao _dao;
@@ -33,6 +33,7 @@ namespace API.Controllers
         public ActionResult Add([FromBody] Vehicle vehicle)
         {
             var res = _dao.Add(vehicle) ? Ok() : StatusCode(400);
+            Console.WriteLine(vehicle.StationId);
             _routeService.RecomputeRoutes();
             return res;
         }
