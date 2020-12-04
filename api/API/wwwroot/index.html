@@ -365,7 +365,7 @@
                 <br />
                 <div class="row">
                     <div class="col card">
-                        <form id="stationForm" action="javascript:void(0);" onsubmit="addStation()">
+                        <form id="stationForm" action="javascript:void(0);" onsubmit="addNewStation()">
                             <h5 class="card-title">Add Stations</h5>
                             <div class="card-body">
                                 <input type="hidden" id="station_id" />
@@ -384,8 +384,8 @@
                                     </div>
                                     <div class="col">
                                         <div class="autocomplete-container" id="autocomplete-container-station"></div>
-                                        <input type="hidden" id="station_address_lat" value="44" />
-                                        <input type="hidden" id="station_address_lng" value="44" />
+                                        <input type="hidden" id="station_address_lat" />
+                                        <input type="hidden" id="station_address_lng" />
                                     </div>
                                 </div>
                                 <br />
@@ -398,7 +398,7 @@
                     <!--Geoapify for the station form (might add a map)-->
                     <script src="admin_geoapify.js"></script>
                     <div class="col card">
-                        <form id="vehiclesForm" action="javascript:void(0);" onsubmit="addVehicle()">
+                        <form id="vehiclesForm" action="javascript:void(0);" onsubmit="addNewVehicle()">
                             <h5 class="card-title">Add Vehicles</h5>
                             <div class="card-body">
                                 <input type="hidden" id="vehicle_id" />

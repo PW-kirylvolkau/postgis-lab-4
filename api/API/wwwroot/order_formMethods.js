@@ -50,9 +50,6 @@ function addNewOrder() {
         deliveryLat: parseFloat(toLatTextbox.value.trim()),
         deliveryLng: parseFloat(toLngTextbox.value.trim())
     };
-    //console.log(newOrder);
-
-    console.log(JSON.stringify(newOrder));
 
     fetch(uri, {
         method: 'POST',
