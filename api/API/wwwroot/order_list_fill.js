@@ -34,6 +34,3 @@ function displayOrderView() {
         }
     }
 }
-
-
-addListItems();

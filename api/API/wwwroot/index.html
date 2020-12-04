@@ -17,9 +17,16 @@
             crossorigin="anonymous"></script>
     <link rel="stylesheet" href="styles.css">
     <title>Front-End</title>
-    <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-    <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-    <script type="text/javascript" src="orders.json"></script>
+    <!--<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>-->
+    <!--<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />-->
+
+    <!--Declaration of the Methods or the forms of the objects type Order-->
+    <script src="order_formMethods.js"></script>
+    <script src="station_formMethods.js"></script>
+    <script src="vehicle_formMethods.js"></script>
+
+    <!--Script containing the code for geoapify-->
+    <script src="geoapify_code.js"></script>
 </head>
 <body id="main">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
@@ -119,7 +126,7 @@
                                             <div class="col">
                                                 <div class="autocomplete-container" id="autocomplete-container-pickup-edit"></div>
                                                 <input type="hidden" id="pickup-Lat-edit" />
-                                                <input type="hidden" id="pickup-Lon-edit"/>
+                                                <input type="hidden" id="pickup-Lon-edit" />
                                             </div>
                                         </div>
                                         <br />
@@ -145,7 +152,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <input class="btn btn-success" type="submit" value="Save" onclick="updateOrder()"/>
+                            <input class="btn btn-success" type="submit" value="Save" onclick="updateOrder()" />
                         </form>
                     </div>
                 </div>
@@ -174,6 +181,14 @@
                 </div>
             </div>
         </div>
+        <!--Load Table for orders as well as the list of orders to click on-->
+        <script src="order_list_fill.js"></script>
+        <script type="text/javascript">
+            getOrders();
+            addListItems();
+        </script>
+        <!--Script to add geoapify textbox elements to the edit forms-->
+        <script src="general_geoapify.js"></script>
         <div class="tab-pane fade" id="order" role="tabpanel" aria-labelledby="order-tab">
             <form id="newOrderForm" action="javascript:void(0);" onsubmit="addNewOrder()">
                 <div class="container p-3 my-3 border">
@@ -310,10 +325,10 @@
                     <div class="card">
                         <h5 class="card-title text-center">Select how you want to choose the order's addresses</h5>
                         <div class="card-body text-center">
-                            <button id="hand-button" class="btn btn-primary" onclick="onHandButtonClick()">
+                            <button type="button" id="hand-button" class="btn btn-primary" onclick="onHandButtonClick()">
                                 Hand selection
                             </button>
-                            <button id="text-button" class="btn btn-secondary" onclick="onTextButtonClick()">
+                            <button type="button" id="text-button" class="btn btn-secondary" onclick="onTextButtonClick()">
                                 Text selection
                             </button>
                         </div>
@@ -362,8 +377,7 @@
                                                 <input type="hidden" id="toLngCoords" value="44" />
                                             </div>
                                         </div>
-                                        <!--Script containing the code for geoapify-->
-                                        <script src="geoapify_code.js"></script>
+
                                     </div>
                                 </div>
                             </div>
@@ -375,20 +389,93 @@
                 </div>
             </form>
         </div>
+        <!--Create and add the textbox elements for geoapify in the New Order Tab-->
+        <script src="newOrder_geoapify.js"></script>
         <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
-            <p>Tab 3</p>
+            <div class="container p-3 my-3">
+                <h2 class="card-title">Admin Tab</h2>
+                <p>Manage stations and vehicles from this tab.</p>
+                <br />
+                <div class="row">
+                    <div class="col card">
+                        <form id="stationForm" action="javascript:void(0);" onsubmit="addStation()">
+                            <h5 class="card-title">Add Stations</h5>
+                            <div class="card-body">
+                                <input type="hidden" id="station_id" />
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="low_labels" for="station_name">Name</label>
+                                    </div>
+                                    <div class="col">
+                                        <input class="form-control" type="text" id="station_name" name="station_name" placeholder="Enter station name..."/>
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="low_labels" for="station_address">Address</label>
+                                    </div>
+                                    <div class="col">
+                                        <div class="autocomplete-container" id="autocomplete-container-station"></div>
+                                        <input type="hidden" id="station_address_lat" value="44" />
+                                        <input type="hidden" id="station_address_lng" value="44" />
+                                    </div>
+                                </div>
+                                <br />
+                                <!--Add Vehicles-->
+                                <br />
+                                <input class="btn btn-primary" type="submit" value="Add New Station" />
+                            </div>
+                        </form>
+                    </div>
+                    <!--Geoapify for the station form (might add a map)-->
+                    <script src="admin_geoapify.js"></script>
+                    <div class="col card">
+                        <form id="vehiclesForm" action="javascript:void(0);" onsubmit="addVehicle()">
+                            <h5 class="card-title">Add Vehicles</h5>
+                            <div class="card-body">
+                                <input type="hidden" id="vehicle_id" />
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="low_labels" for="vehicle_name">Name</label>
+                                    </div>
+                                    <div class="col">
+                                        <input class="form-control" type="text" id="vehicle_name" name="vehicle_name" placeholder="Enter vehicle name..." />
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="low_labels" for="vehicle_station_id">Station Id</label>
+                                    </div>
+                                    <div class="col">
+                                        <input class="form-control" type="text" id="vehicle_station_id" name="vehicle_station_id" placeholder="Enter stations Id..." />
+                                    </div>
+                                </div>
+                                <br />
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="low_labels" for="vehicle_capacity">Vehicle Capacity</label>
+                                    </div>
+                                    <div class="col">
+                                        <input class="form-control" type="text" id="vehicle_capacity" name="vehicle_capacity" placeholder="Enter vehicle capacity..." />
+                                    </div>
+                                </div>
+                                <br />
+                                <br />
+                                <input class="btn btn-primary" type="submit" value="Add New Vehicle" />
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Javascript -->
     <script src="geocoding.js"></script>
-    <script src="map_leaflet.js"></script>
+    <!--<script src="map_leaflet.js"></script>-->
     <script src="location.js"></script>
     <script src="index.js"></script>
     <script src="order_visuals.js"></script>
-    <script src="order_formMethods.js"></script>
-    <script type="text/javascript">
-        getOrders();
-    </script>
-    <script src="order_list_fill.js"></script>
 </body>
 </html>

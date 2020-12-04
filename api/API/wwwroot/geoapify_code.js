@@ -198,23 +198,3 @@ function addressAutocomplete(containerElement, callback, inputId) {
 
 }
 
-addressAutocomplete(document.getElementById("autocomplete-container-from"), (data) => {
-    console.log("Selected option: ");
-    console.log(data);
-}, 'fromAddress');
-
-addressAutocomplete(document.getElementById("autocomplete-container-to"), (data) => {
-    console.log("Selected option: ");
-    console.log(data);
-}, 'toAddress');
-
-addressAutocomplete(document.getElementById("autocomplete-container-pickup-edit"), (data) => {
-    console.log("Selected option: ");
-    console.log(data);
-}, 'pickupAddress-edit');
-document.getElementById('pickupAddress-edit').disabled = false;
-addressAutocomplete(document.getElementById("autocomplete-container-delivery-edit"), (data) => {
-    console.log("Selected option: ");
-    console.log(data);
-}, 'deliveryAddress-edit');
-document.getElementById('deliveryAddress-edit').disabled = false;

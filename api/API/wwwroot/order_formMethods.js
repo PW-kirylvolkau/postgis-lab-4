@@ -19,24 +19,29 @@ function addNewOrder() {
     const sSurnameTextbox = document.getElementById('sender_surname');
     const rNameTextbox = document.getElementById('recipient_name');
     const rSurnameTextbox = document.getElementById('recipient_surname');
-    const pWeightTextBox = document.getElementById('pweight');
+    const pWeightTextbox = document.getElementById('pweight');
+    const fromAddressTextbox = document.getElementById('fromAddress');
+    const toAddressTextbox = document.getElementById('toAddress');
     const fromLatTextbox = document.getElementById('fromLatCoords');
     const fromLngTextbox = document.getElementById('fromLngCoords');
     const toLatTextbox = document.getElementById('toLatCoords');
     const toLngTextbox = document.getElementById('toLngCoords');
+    //Validation here
 
     const newOrder = {
         sender: sNameTextbox.value.trim() + " " + sSurnameTextbox.value.trim(),
         recipient: rNameTextbox.value.trim() + " " + rSurnameTextbox.value.trim(),
-        pickupAddress: fromInput.value.trim(),
-        deliveryAddress: toInput.value.trim(),
-        packageWeight: parseFloat(pWeightTextBox.value.trim()),
+        pickupAddress: fromAddressTextbox.value.trim(),
+        deliveryAddress: toAddressTextbox.value.trim(),
+        packageWeight: parseFloat(pWeightTextbox.value.trim()),
         pickupLat: parseFloat(fromLatTextbox.value.trim()),
         pickupLng: parseFloat(fromLngTextbox.value.trim()),
         deliveryLat: parseFloat(toLatTextbox.value.trim()),
         deliveryLng: parseFloat(toLngTextbox.value.trim())
-    }
-    console.log(newOrder);
+    };
+    //console.log(newOrder);
+
+    console.log(JSON.stringify(newOrder));
 
     fetch(uri, {
         method: 'POST',
@@ -53,10 +58,10 @@ function addNewOrder() {
             sSurnameTextbox.value = '';
             rNameTextbox.value = '';
             rSurnameTextbox.value = '';
-            fromInput.value = '';
+            fromAddressTextbox.value = '';
             fromLatTextbox = '';
             fromLngTextbox = '';
-            toInput.value = '';
+            toAddressTextbox.value = '';
             toLatTextbox = '';
             toLngTextbox = '';
             pWeightTextBox.value = 1;
@@ -84,6 +89,7 @@ function displayEditForm(id) {
 //PUT (Update) Orders
 function editOrder() {
     console.log();
+    closeInput();
 }
 
 //Close edit form 
