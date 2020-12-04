@@ -18,4 +18,4 @@ const delivery_lng_tb = document.getElementById('toLngCoords');
 
 
 setListOfCountries();
-//initMaps();
+initMap();

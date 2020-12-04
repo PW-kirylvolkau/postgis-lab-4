@@ -1,10 +1,5 @@
-﻿#mapid{
-    height: 500px;
-    width: 500px;
-}
-
-.map-wrapper {
-    width: 500px;
+﻿.map-wrapper {
+    width: 700px;
     box-shadow: 0 0 6px #000000;
 }
 
@@ -62,9 +57,9 @@ button.location-button {
     box-shadow: 0 0 6px #000000;
 }
 
-#map-no {
-    width: 400px;
-    height: 400px;
+#mapid {
+    width: 100%;
+    height: 500px;
     box-shadow: 0 0 6px #000000;
 }
 

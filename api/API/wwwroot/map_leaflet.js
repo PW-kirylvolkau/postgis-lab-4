@@ -12,8 +12,8 @@ const popupSettings = {
     autoClose: false
 };
 
-function initMaps() {
-	mymap = L.map('mapid').setView([51.505, -0.09], 13);
+function initMap() {
+	mymap = L.map('mapid').setView([0, 0], 2);
 	addTileLayer();
 	addMapEventHandlers();
 }
