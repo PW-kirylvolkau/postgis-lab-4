@@ -3,15 +3,15 @@
 //Adding orders to a list of selectable items
 //Necessary interaction between a function that gets items from DB
 function addListItems() {
-        console.log(allOrders);
-        allOrders.forEach(order => {
+    const list_view = document.getElementById('order-list-tab');
+    allOrders.forEach(order => {
         let order_tab = document.createElement('a');
         order_tab.setAttribute('class', 'list-group-item');
-        order_tab.setAttribute('id', `list-order-${order.Id}`);
+        order_tab.setAttribute('id', `list-order-${order.id}`);
         order_tab.setAttribute('data-toggle', 'list');
         order_tab.setAttribute('role', 'tab');
-        order_tab.setAttribute('aria-controls', `order${order.Id}`);
-        order_tab.innerHTML = "#" + order.Id+ " "+order.sender;
+        order_tab.setAttribute('aria-controls', `order${order.id}`);
+        order_tab.innerHTML = "#" + order.id+ " "+order.sender;
         //Function to display map points after clicking on the order
         order_tab.addEventListener("onclick", function () {
 
@@ -23,14 +23,21 @@ function addListItems() {
 
 //function for viewing order
 function displayOrderView() {
-    const p_cont = document.getElementById('popup-content');
-    p_cont.innerHTML = "Please Choose an Order from the list.";
+    document.getElementById('error-message').style.display = "block";
     const list = document.getElementById('order-list-tab').getElementsByTagName('a');
     for (i = 0; i < list.length; i++) {
         if (list[i].getAttribute('class').indexOf('active') !== -1) {
-            //Access array of items and depending on id or something, display correct info
-            p_cont.innerHTML = list[i].getAttribute('id');
+            document.getElementById('error-message').style.display = "none";
+            let stringArr = list[i].getAttribute('id').split("-"); 
+            console.log(stringArr);
+            let order = getOrder(parseInt(stringArr[2],10));
+            document.getElementById('sender-content').innerHTML = order.sender;
+            document.getElementById('recipient-content').innerHTML = order.recipient;
+            document.getElementById('pickup-content').innerHTML = order.pickupAddress;
+            document.getElementById('delivery-content').innerHTML = order.deliveryAddress;
+            document.getElementById('package-content').innerHTML = order.packageWeight;
             break;
         }
     }
+
 }

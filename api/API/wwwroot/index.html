@@ -69,7 +69,44 @@
                                         </div>
                                         <div class="modal-body">
                                             <!--Popup content which should have all the info about the order-->
-                                            <p id="popup-content"></p>
+                                            <div id="popup-content">
+                                                <p id="error-message" style="display:none">Please choose an Order to view.</p>
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <label class="low_labels">Sender</label>
+                                                    </div>
+                                                    <div class="col" id="sender-content">...</div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <label class="low_labels">Recipient</label>
+                                                    </div>
+                                                    <div class="col" id="recipient-content">...</div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <label class="low_labels">Pickup Address</label>
+                                                    </div>
+                                                    <div class="col" id="pickup-content">...</div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <label class="low_labels">Delivery Address</label>
+                                                    </div>
+                                                    <div class="col" id="delivery-content">...</div>
+                                                </div>
+                                                <br />
+                                                <div class="row">
+                                                    <div class="col-4">
+                                                        <label class="low_labels">Package Weight</label>
+                                                    </div>
+                                                    <div class="col" id="package-content">...</div>
+                                                </div>
+                                                <br />
+                                            </div>
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
@@ -185,7 +222,6 @@
         <script src="order_list_fill.js"></script>
         <script type="text/javascript">
             getOrders();
-            addListItems();
         </script>
         <!--Script to add geoapify textbox elements to the edit forms-->
         <script src="general_geoapify.js"></script>
@@ -194,71 +230,6 @@
                 <div class="container p-3 my-3 border">
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-7">
-                                <h3>Shipment Details</h3>
-                                <p>Provide details of the items that you want to ship</p>
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="low_labels" for="pquantity">QUANTITY</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="number" id="pquantity" name="pquantity" min="1" max="999" value="1">
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="low_labels" for="typeItem">TYPE OF ITEM</label>
-                                    </div>
-                                    <div class="col">
-                                        <select name="typeItem" id="typeItem" form="newOrderForm">
-                                            <option value="cardboardbox">Cardboard Box</option>
-                                            <option value="suitcase">Suitcase</option>
-                                            <option value="package">Package</option>
-                                            <option value="other">Other</option>
-                                        </select>
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="low_labels" for="pweight">WEIGHT(KG)</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="number" name="pweight" id="pweight" min="1" max="100" value="1">
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-md-auto">
-                                        <label class="low_labels" for="plength">LENGTH</label>
-                                    </div>
-                                    <div class="col-md-auto">
-                                        <input type="text" name="plength" id="plength" placeholder="cm" maxlength="5" size="5">
-                                    </div>
-                                    <div class="col-md-auto">
-                                        <label class="low_labels" for="pwidth">WIDTH</label>
-                                    </div>
-                                    <div class="col-md-auto">
-                                        <input type="text" name="pwidth" id="pwidth" placeholder="cm" maxlength="5" size="5">
-                                    </div>
-                                    <div class="col-md-auto">
-                                        <label class="low_labels" for="pheight">HEIGHT</label>
-                                    </div>
-                                    <div class="col-md-auto">
-                                        <input type="text" name="pheight" id="pheight" placeholder="cm" maxlength="5" size="5">
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="low_labels" for="pvalue">VALUE(&#8364;)</label>
-                                    </div>
-                                    <div class="col">
-                                        <input type="number" name="pvalue" id="pvalue" min="1" max="99999">
-                                    </div>
-                                </div>
-                            </div>
                             <div class="col">
                                 <h3>Personal Information</h3>
                                 <p>Provide Personal Information</p>
@@ -267,7 +238,7 @@
                                         <label class="low_labels" for="sender_name">NAME</label>
                                     </div>
                                     <div class="col">
-                                        <input id="sender_name" type="text" name="sender_name">
+                                        <input class="form-control" id="sender_name" type="text" name="sender_name">
                                     </div>
                                 </div>
                                 <br />
@@ -276,36 +247,20 @@
                                         <label class="low_labels" for="sender_surname">SURNAME</label>
                                     </div>
                                     <div class="col">
-                                        <input id="sender_surname" type="text" name="sender_surname">
+                                        <input class="form-control" id="sender_surname" type="text" name="sender_surname">
                                     </div>
                                 </div>
                                 <br />
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="low_labels" for="sender_email">E-MAIL</label>
-                                    </div>
-                                    <div class="col">
-                                        <input id="sender_email" type="email" name="sender_email">
-                                    </div>
-                                </div>
-                                <br />
-                                <div class="row">
-                                    <div class="col-3">
-                                        <label class="low_labels" for="sender_phone">PHONE NUMBER</label>
-                                    </div>
-                                    <div class="col">
-                                        <input id="sender_phone" type="text" name="sender_phone">
-                                    </div>
-                                </div>
-                                <br />
-                                <h5>Recipient Information</h5>
+                            </div>
+                            <div class="col">
+                                <h3>Recipient Information</h3>
                                 <p>Please provide information about the person who receives the package</p>
                                 <div class="row">
                                     <div class="col-3">
                                         <label class="low_labels" for="recipient_name">NAME</label>
                                     </div>
                                     <div class="col">
-                                        <input id="recipient_name" type="text" name="recipient_name" />
+                                        <input class="form-control" id="recipient_name" type="text" name="recipient_name" />
                                     </div>
                                 </div>
                                 <br />
@@ -314,10 +269,22 @@
                                         <label class="low_labels" for="recipient_surname">SURNAME</label>
                                     </div>
                                     <div class="col">
-                                        <input id="recipient_surname" type="text" name="recipient_surname" />
+                                        <input class="form-control" id="recipient_surname" type="text" name="recipient_surname" />
                                     </div>
                                 </div>
                                 <br />
+                            </div>
+                        </div>
+                        <br />
+                        <br />
+                        <h3>Package Details</h3>
+                        <br />
+                        <div class="row">
+                            <div class="col-3">
+                                <label class="low_labels" for="pweight">WEIGHT(KG)</label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control" style="width:50%" type="number" name="pweight" id="pweight" min="1" max="100" value="1">
                             </div>
                         </div>
                     </div>
@@ -466,6 +433,25 @@
                                 <input class="btn btn-primary" type="submit" value="Add New Vehicle" />
                             </div>
                         </form>
+                    </div>
+                </div>
+            </div>
+            <div class="container p-3 my-3">
+                <div class="card">
+                    <h3 class="card-title">Station Table</h3>
+                    <div class="card-body">
+                        <!--Table that displays all current orders in the database-->
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col"># of Station</th>
+                                    <th scope="col">Name</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">Vehicles</th>
+                                </tr>
+                            </thead>
+                            <tbody id="stationTable"></tbody>
+                        </table>
                     </div>
                 </div>
             </div>

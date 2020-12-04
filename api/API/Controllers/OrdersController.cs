@@ -56,7 +56,7 @@ namespace API.Controllers
             return order;
         }
 
-        [HttpPut]
+        [HttpPut("{id}")]
         public ActionResult<Order> UpdateOrder(Order order)
         {
             if (!_dao.Update(order)) return BadRequest();

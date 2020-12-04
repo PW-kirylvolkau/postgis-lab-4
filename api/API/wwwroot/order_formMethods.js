@@ -12,6 +12,17 @@ function getOrders() {
         .catch(error => console.error('Unable to get orders.', error));
 }
 
+//GET Order from id
+
+function getOrder(id) {
+    fetch(`${uri}/${id}`)
+        .then(response => response.json())
+        .then(data => {
+            return data;
+        })
+        .catch(error => console.error('Unable to get order.', error));
+}
+
 //POST Orders
 function addNewOrder() {
     //All necessary forms
@@ -63,16 +74,18 @@ function addNewOrder() {
             toAddressTextbox.value = '';
             toLatTextbox.value = '';
             toLngTextbox.value = '';
-            pWeightTextBox.value = 1;
+            pWeightTextbox.value = 1;
         })
         .catch(error => console.error('Unable to add order.', error));
+    addListItems();
 }
 
 
 //Display the edit form
 function displayEditForm(id) {
-    const currentOrder = allOrders.find(order => order.Id === id);
+    const currentOrder = allOrders.find(order => order.id === id);
     console.log(currentOrder);
+    document.getElementById('edit-id').value = currentOrder.id;
     document.getElementById('sender-fname-edit').value = currentOrder.sender;
     document.getElementById('recipient-fname-edit').value = currentOrder.recipient;
     document.getElementById('pickupAddress-edit').value = currentOrder.pickupAddress;
@@ -86,8 +99,31 @@ function displayEditForm(id) {
 
 }
 //PUT (Update) Orders
-function editOrder() {
-    console.log();
+function updateOrder() {
+    const orderId = parseInt(document.getElementById('edit-id').value.trim(), 10);
+    const newOrder = {
+        id: orderId,
+        sender: document.getElementById('sender-fname-edit').value.trim(),
+        recipient: document.getElementById('recipient-fname-edit').value.trim(),
+        pickupAddress: document.getElementById('pickupAddress-edit').value.trim(),
+        deliveryAddress: document.getElementById('deliveryAddress-edit').value.trim(),
+        packageWeight: parseFloat(document.getElementById('packageWeight-edit').value.trim()),
+        pickupLat: parseFloat(document.getElementById('pickup-Lat-edit').value.trim()),
+        pickupLng: parseFloat(document.getElementById('pickup-Lon-edit').value.trim()),
+        deliveryLat: parseFloat(document.getElementById('delivery-Lat-edit').value.trim()),
+        deliveryLng: parseFloat(document.getElementById('delivery-Lon-edit').value.trim())
+    };
+
+    fetch(`${uri}/${orderId}`, {
+        method: 'PUT',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(newOrder)
+    })
+        .then(() => getOrders())
+        .catch(error => console.error('Unable to update order.', error));
     closeInput();
 }
 
@@ -144,18 +180,17 @@ function tableAddOrders(data) {
         let editButton = button.cloneNode(false);
         editButton.innerText = 'Edit';
         editButton.setAttribute('class', 'btn btn-primary');
-        editButton.setAttribute('onclick', `displayEditForm(${order.Id})`);
+        editButton.setAttribute('onclick', `displayEditForm(${order.id})`);
         let td7 = tr.insertCell(6);
         td7.appendChild(editButton);
 
         let deleteButton = button.cloneNode(false);
         deleteButton.innerText = 'Delete';
         deleteButton.setAttribute('class', 'btn btn-danger');
-        deleteButton.setAttribute('onclick', `deleteOrder(${order.Id})`);
+        deleteButton.setAttribute('onclick', `deleteOrder(${order.id})`);
         let td8 = tr.insertCell(7);
         td8.appendChild(deleteButton);
     });
-
-
     allOrders = data;
+    addListItems();
 }
