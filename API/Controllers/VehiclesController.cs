@@ -12,12 +12,12 @@ namespace API.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class VehicleController : ControllerBase
+    public class VehiclesController : ControllerBase
     {
         private readonly VehicleDao _dao;
         private readonly RouteService _routeService;
         
-        public VehicleController(VehicleDao dao,RouteService routeService )
+        public VehiclesController(VehicleDao dao, RouteService routeService )
         {
             _dao = dao;
             _routeService = routeService;
@@ -30,10 +30,13 @@ namespace API.Controllers
         }
 
         [HttpPost]
-        public ActionResult Add([FromBody] Vehicle vehicle)
+        public ActionResult Add(Vehicle vehicle)
         {
+            Console.WriteLine(ModelState.IsValid);
+            
+            if (!ModelState.IsValid) return BadRequest();
+       
             var res = _dao.Add(vehicle) ? Ok() : StatusCode(400);
-            Console.WriteLine(vehicle.StationId);
             _routeService.RecomputeRoutes();
             return res;
         }

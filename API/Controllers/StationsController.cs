@@ -10,7 +10,7 @@ using Microsoft.Extensions.Logging;
 namespace API.Controllers
 {
     [ApiController]
-    [Route("api/Station")]
+    [Route("api/[controller]")]
     public class StationController : ControllerBase
     {
         private readonly StationDao _dao;

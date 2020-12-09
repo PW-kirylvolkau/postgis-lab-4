@@ -11,13 +11,13 @@ namespace API.Models
         public int Id { get; set; }
         
         [Required]
-        public int Name { get; set; }
-    
-        [Required]
-        public int StationId { get; set; }
-        
+        public string Name { get; set; }
+
         [Required, Range(0, 1000)]
         public double Capacity { get; set; }
+        
+        [Required]
+        public int StationId { get; set; }
         
         public Station Station { get; set; }
 

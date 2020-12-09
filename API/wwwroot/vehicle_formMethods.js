@@ -1,5 +1,5 @@
 //Methods for communication with the DB for stations
-const uriVehicles = "api/Vehicle";
+const uriVehicles = "api/Vehicles";
 let allVehicles = [];
 
 //GET stations method
