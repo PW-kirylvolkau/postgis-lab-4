@@ -1,6 +1,9 @@
 let generalMap;
-
 const initGeneralMap = () => initMap('map-general', generalMap);
+
+function initGeneralPage() {
+    displayRoutes();
+}
 
 function displayRoutes() {
     if(generalMap) {

@@ -1,12 +1,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using Microsoft.EntityFrameworkCore.Metadata;
 
 namespace API.Models
 {
     [Table("stations", Schema = "public")]
-    public class Station
+    public class Station : IEntity
     {
+
         [Key]
         public int Id { get; set; }
         

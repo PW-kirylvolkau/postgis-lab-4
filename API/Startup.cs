@@ -1,5 +1,6 @@
 using API.Data;
 using API.Data.Dao;
+using API.Repository;
 using API.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -31,6 +32,8 @@ namespace API
 
             services.AddScoped<OrderDao>();
             services.AddScoped<StationDao>();
+            services.AddScoped<StationRepository>();
+            services.AddScoped<VehicleRepository>();
             services.AddScoped<VehicleDao>();
             services.AddScoped<RouteDao>();
 

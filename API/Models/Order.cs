@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace API.Models
 {
     [Table("orders", Schema = "public")]
-    public class Order
+    public class Order : IEntity
     {
         [Key]
         public int Id { get; set; }

@@ -1,6 +1,19 @@
 function getVehicles(callback) {
-    return fetch(API_VEHICLES)
-        .then(response => response.json)
+    fetch(API_VEHICLES)
+        .then(response => response.json())
         .then(vehicles => callback(vehicles))
-        .catch(e => console.log("Unable to get vehicle: ", e));
+        .catch(e => toastr.error('Error encountered : ' + e));
+}
+
+function addVehicle(payload, callback) {
+    fetch(API_VEHICLES,  {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+        .then(response => callback(response))
+        .catch(e => toastr.error('Error encountered : ' + e));
 }
