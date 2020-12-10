@@ -3,13 +3,13 @@ const uriVehicles = "api/Vehicles";
 let allVehicles = [];
 
 //GET stations method
-function getVehicles() {
-    fetch(uriVehicles)
-        .then(response => response.json())
-        .then(data => allVehicles = data)
-        .catch(error => console.error('Unable to get Vehicles.', error));
-
-}
+// function getVehicles() {
+//    
+//         .then(response => response.json())
+//         .then(data => allVehicles = data)
+//         .catch(error => console.error('Unable to get Vehicles.', error));
+//
+// }
 //POST stations method
 function addNewVehicle() {
     const nameTextbox = document.getElementById('vehicle_name');
@@ -46,7 +46,9 @@ function addNewVehicle() {
         body: JSON.stringify(newVehicle)
     })
         .then(() => {
-            getVehicles();
+            getVehicles().then(vehicles => {
+                allVehicles = vehicles
+            }).catch(() => console.log("Unable to get vehicles"));
             nameTextbox.value = '';
             stationTextbox.value = '';
             capacityTextbox.value = '';

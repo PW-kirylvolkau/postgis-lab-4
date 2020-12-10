@@ -6,27 +6,39 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.3/dist/css/bootstrap.min.css"
           integrity="sha384-TX8t27EcRE3e/ihU7zmQxVncDAy5uIKz4rEkgIXeMed4M0jlfIDPvg6uqKI2xXr2" crossorigin="anonymous">
+    
+    <!-- Leaflet CSS -->
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.7.1/dist/leaflet.css"
           integrity="sha512-xodZBNTC5n17Xt2atTPuE1HxjVMSvLVW9ocqUKLsCC5CXdbqCmblAshOMAS6/keqq/sMZMZ19scR4PsZChSR7A=="
           crossorigin="" />
-    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
-            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
-            crossorigin=""></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
-            integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
-            crossorigin="anonymous"></script>
+    
+    <!-- Custom CSS -->
     <link rel="stylesheet" href="styles.css">
-    <title>Front-End</title>
+    
+    <title>Salesman problem</title>
     <!--<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>-->
     <!--<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />-->
     <!--Declaration of the Methods or the forms of the objects type Order-->
     <script src="order_formMethods.js"></script>
     <script src="station_formMethods.js"></script>
     <script src="vehicle_formMethods.js"></script>
+    
+    <!-- Leaflet script -->
+    <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
+            integrity="sha512-XQoYMqMTK8LvdxXYG3nZ448hOEQiglfqkJs1NOQV44cWnUrBc8PkAOcXy20w0vlaXaVUearIOBhiXZ5V3ynxwA=="
+            crossorigin=""></script>
 
-    <!--Script containing the code for geoapify-->
-    <script src="geoapify_code.js"></script>
-    <script src="geocoding.js"></script>
+    <!-- Env script -->
+    <script src="env.js"></script>
+
+    <!-- Services scripts -->
+    <script src="./services/autocomplete.service.js"></script>
+    <script src="./services/geoapify.service.js"></script>
+    <script src="./services/leaflet.service.js"></script>
+
+    <!-- API scripts -->
+    <script src="./api/vehicles.api.js"></script>
+    
 
 </head>
 <body id="main">
@@ -119,9 +131,8 @@
                     </div>
                     <div class="col-8">
                         <!--Map-->
-                        <div id="map-grl"></div>
-                        <script src="map_grl_code.js"></script>
-                        <script src="routes.service.js"></script>
+                        <div id="map-general"></div>
+                        
                     </div>
                 </div>
             </div>
@@ -460,8 +471,7 @@
         </div>
     </div>
     <!-- Javascript -->
-    <script src="map_leaflet.js"></script>
-    <script src="location.js"></script>
+    <script src="./pages/general.page.js"></script>
     <script src="index.js"></script>
     <script src="order_visuals.js"></script>
 </body>

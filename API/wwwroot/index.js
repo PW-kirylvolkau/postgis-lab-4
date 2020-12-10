@@ -16,8 +16,5 @@ const pickup_lng_tb = document.getElementById('fromLngCoords');
 const delivery_lat_tb = document.getElementById('toLatCoords');
 const delivery_lng_tb = document.getElementById('toLngCoords');
 
-
-setListOfCountries();
-initMap();
 displayRoutes();
 //initMaps();

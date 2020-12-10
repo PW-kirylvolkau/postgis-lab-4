@@ -1,13 +1,13 @@
+/* Function to autocomplete address fields.
+   Takes as args:
+    - containerElement ( div ).
+    - callback ( function to set list of elements ).
+    - inputId ( id of the input to create ).
+ */
 
-
-/* 
-    The addressAutocomplete takes as parameters:
-  - a container element (div)
-  - callback to notify about address selection
-*/
 function addressAutocomplete(containerElement, callback, inputId) {
     // create input element
-    var inputElement = document.createElement("input");
+    const inputElement = document.createElement("input");
     inputElement.setAttribute("type", "text");
     inputElement.setAttribute("placeholder", "Enter an address here...");
     inputElement.setAttribute('id', inputId);
@@ -17,7 +17,7 @@ function addressAutocomplete(containerElement, callback, inputId) {
     containerElement.appendChild(inputElement);
 
     // add input field clear button
-    var clearButton = document.createElement("div");
+    const clearButton = document.createElement("div");
     clearButton.classList.add("clear-button");
     addIcon(clearButton);
     clearButton.addEventListener("click", (e) => {
@@ -30,17 +30,17 @@ function addressAutocomplete(containerElement, callback, inputId) {
     containerElement.appendChild(clearButton);
 
     /* Current autocomplete items data (GeoJSON.Feature) */
-    var currentItems;
+    let currentItems;
 
     /* Active request promise reject function. To be able to cancel the promise when a new request comes */
-    var currentPromiseReject;
+    let currentPromiseReject;
 
     /* Focused item in the autocomplete list. This variable is used to navigate with buttons */
-    var focusedItemIndex;
+    let focusedItemIndex;
 
     /* Execute a function when someone writes in the text field: */
     inputElement.addEventListener("input", function (e) {
-        var currentValue = this.value;
+        const currentValue = this.value;
 
         /* Close any already open dropdown list */
         closeDropDownList();
@@ -61,11 +61,10 @@ function addressAutocomplete(containerElement, callback, inputId) {
         clearButton.classList.add("visible");
 
         /* Create a new promise and send geocoding request */
-        var promise = new Promise((resolve, reject) => {
+        const promise = new Promise((resolve, reject) => {
             currentPromiseReject = reject;
-
-            var apiKey = "87237f7ef2144ac39392538f87b8958e";
-            var url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(currentValue)}&limit=5&apiKey=${apiKey}`;
+            
+            const url = `https://api.geoapify.com/v1/geocode/autocomplete?text=${encodeURIComponent(currentValue)}&limit=5&apiKey=${GEOAPIFY_API_KEY}`;
 
             fetch(url)
                 .then(response => {
@@ -82,14 +81,14 @@ function addressAutocomplete(containerElement, callback, inputId) {
             currentItems = data.features;
 
             /*create a DIV element that will contain the items (values):*/
-            var autocompleteItemsElement = document.createElement("div");
+            const autocompleteItemsElement = document.createElement("div");
             autocompleteItemsElement.setAttribute("class", "autocomplete-items");
             containerElement.appendChild(autocompleteItemsElement);
 
             /* For each item in the results */
             data.features.forEach((feature, index) => {
                 /* Create a DIV element for each element: */
-                var itemElement = document.createElement("DIV");
+                const itemElement = document.createElement("DIV");
                 /* Set formatted address as item value */
                 itemElement.innerHTML = feature.properties.formatted;
 
@@ -114,23 +113,23 @@ function addressAutocomplete(containerElement, callback, inputId) {
 
     /* Add support for keyboard navigation */
     inputElement.addEventListener("keydown", function (e) {
-        var autocompleteItemsElement = containerElement.querySelector(".autocomplete-items");
+        const autocompleteItemsElement = containerElement.querySelector(".autocomplete-items");
         if (autocompleteItemsElement) {
-            var itemElements = autocompleteItemsElement.getElementsByTagName("div");
-            if (e.keyCode == 40) {
+            const itemElements = autocompleteItemsElement.getElementsByTagName("div");
+            if (e.keyCode === 40) {
                 e.preventDefault();
                 /*If the arrow DOWN key is pressed, increase the focusedItemIndex variable:*/
                 focusedItemIndex = focusedItemIndex !== itemElements.length - 1 ? focusedItemIndex + 1 : 0;
                 /*and and make the current item more visible:*/
                 setActive(itemElements, focusedItemIndex);
-            } else if (e.keyCode == 38) {
+            } else if (e.keyCode === 38) {
                 e.preventDefault();
 
                 /*If the arrow UP key is pressed, decrease the focusedItemIndex variable:*/
                 focusedItemIndex = focusedItemIndex !== 0 ? focusedItemIndex - 1 : focusedItemIndex = (itemElements.length - 1);
                 /*and and make the current item more visible:*/
                 setActive(itemElements, focusedItemIndex);
-            } else if (e.keyCode == 13) {
+            } else if (e.keyCode === 13) {
                 /* If the ENTER key is pressed and value as selected, close the list*/
                 e.preventDefault();
                 if (focusedItemIndex > -1) {
@@ -138,9 +137,9 @@ function addressAutocomplete(containerElement, callback, inputId) {
                 }
             }
         } else {
-            if (e.keyCode == 40) {
+            if (e.keyCode === 40) {
                 /* Open dropdown list again */
-                var event = document.createEvent('Event');
+                const event = document.createEvent('Event');
                 event.initEvent('input', true, true);
                 inputElement.dispatchEvent(event);
             }
@@ -150,7 +149,7 @@ function addressAutocomplete(containerElement, callback, inputId) {
     function setActive(items, index) {
         if (!items || !items.length) return false;
 
-        for (var i = 0; i < items.length; i++) {
+        for (let i = 0; i < items.length; i++) {
             items[i].classList.remove("autocomplete-active");
         }
 
@@ -163,7 +162,7 @@ function addressAutocomplete(containerElement, callback, inputId) {
     }
 
     function closeDropDownList() {
-        var autocompleteItemsElement = containerElement.querySelector(".autocomplete-items");
+        const autocompleteItemsElement = containerElement.querySelector(".autocomplete-items");
         if (autocompleteItemsElement) {
             containerElement.removeChild(autocompleteItemsElement);
         }
@@ -172,11 +171,11 @@ function addressAutocomplete(containerElement, callback, inputId) {
     }
 
     function addIcon(buttonElement) {
-        var svgElement = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
+        const svgElement = document.createElementNS("http://www.w3.org/2000/svg", 'svg');
         svgElement.setAttribute('viewBox', "0 0 24 24");
         svgElement.setAttribute('height', "24");
 
-        var iconElement = document.createElementNS("http://www.w3.org/2000/svg", 'path');
+        const iconElement = document.createElementNS("http://www.w3.org/2000/svg", 'path');
         iconElement.setAttribute("d", "M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z");
         iconElement.setAttribute('fill', 'currentColor');
         svgElement.appendChild(iconElement);
@@ -190,7 +189,7 @@ function addressAutocomplete(containerElement, callback, inputId) {
             closeDropDownList();
         } else if (!containerElement.querySelector(".autocomplete-items")) {
             // open dropdown list again
-            var event = document.createEvent('Event');
+            const event = document.createEvent('Event');
             event.initEvent('input', true, true);
             inputElement.dispatchEvent(event);
         }
