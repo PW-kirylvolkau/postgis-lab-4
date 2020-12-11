@@ -1,5 +1,4 @@
 using API.Data;
-using API.Data.Dao;
 using API.Repository;
 using API.Services;
 using Microsoft.AspNetCore.Builder;
@@ -29,13 +28,11 @@ namespace API
                // options.UseNpgsql(Configuration.GetConnectionString("PG"));
                options.UseInMemoryDatabase("routes");
             });
-
-            services.AddScoped<OrderDao>();
-            services.AddScoped<StationDao>();
+            
             services.AddScoped<StationRepository>();
             services.AddScoped<VehicleRepository>();
-            services.AddScoped<VehicleDao>();
-            services.AddScoped<RouteDao>();
+            services.AddScoped<RouteRepository>();
+            services.AddScoped<OrderRepository>();
 
             services.AddScoped<RouteService>();
             services.AddScoped<VehicleService>();

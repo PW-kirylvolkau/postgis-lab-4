@@ -25,6 +25,7 @@ function initGeneralPage() {
     }, 'deliveryAddress-edit');
 
     document.getElementById('deliveryAddress-edit').disabled = false;
+    initGeneralMap();
     displayRoutes();
 }
 

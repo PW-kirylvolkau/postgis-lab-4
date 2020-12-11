@@ -13,15 +13,6 @@ function getOrders() {
         .catch(error => console.error('Unable to get orders.', error));
 }
 
-//GET Order from id
-
-function getOrder(id) {
-    fetch(`${uri}/${id}`)
-        .then(response => response.json())
-        .then(data => returnDataValue(data))
-        .catch(error => console.error('Unable to get order.', error));
-}
-
 
 //Display the edit form
 function displayEditForm(id) {
@@ -135,11 +126,4 @@ function tableAddOrders(data) {
     });
     allOrders = data;
     addListItems();
-}
-
-
-
-function returnDataValue(data) {
-    currentOrder = data;
-    console.log(currentOrder);
 }

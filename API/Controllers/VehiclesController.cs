@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Data.Dao;
 using API.Models;
 using API.Repository;
 using API.Services;
@@ -49,7 +48,6 @@ namespace API.Controllers
             }
             var added = await _repository.Add(vehicle);
             _routeService.RecomputeRoutes();
-            
             return CreatedAtAction(nameof(GetById), new {id = added.Id}, added);
         }
     }

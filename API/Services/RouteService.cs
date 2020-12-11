@@ -1,57 +1,55 @@
 using System.Collections.Generic;
-using API.Data.Dao;
 using API.Models;
+using API.Repository;
 
 namespace API.Services
 {
     public class RouteService
     {
-        private readonly OrderDao _order;
-        private readonly VehicleDao _vehicle;
-        private readonly RouteDao _route;
-        private readonly StationDao _station;
+        private readonly OrderRepository _order;
+        private readonly VehicleRepository _vehicle;
+        private readonly RouteRepository _route;
         private readonly VehicleService _vehicleService;
         
         public RouteService(
-            OrderDao order, 
-            VehicleDao vehicle, 
-            RouteDao route, 
-            StationDao station,
+            OrderRepository order, 
+            VehicleRepository vehicle, 
+            RouteRepository route,
             VehicleService vehicleService
         )
         {
             _order = order;
             _vehicle = vehicle;
             _route = route;
-            _station = station;
             _vehicleService = vehicleService;
         }
 
-        public void ClearRoutes()
+        public async void ClearRoutes()
         {
-            foreach (var route in _route.GetAll())
+            foreach (var route in await _route.GetAll())
             {
-                _route.Delete(route);
+                await _route.Delete(route.Id);
             }
         }
 
-        public void RecomputeRoutes()
+        public async void RecomputeRoutes()
         {
             var idx = 0;
-            var orders = _order.GetAll();
+            var orders = await _order.GetAll();
             var takenCapacity = 0.0;
-            foreach (var vehicle in _vehicle.GetAll())
+            foreach (var vehicle in await _vehicle.GetAll())
             {
-                _vehicleService.ResetRoutes(vehicle);
+                await _vehicleService.ResetRoutes(vehicle);
                 while (takenCapacity <= vehicle.Capacity && idx < orders.Count)
                 {
-                    _route.Add(new Route {Order = orders[idx]});
-                    var route = _route
-                        .GetAll()
-                        .Find(r => r.Order.Id == orders[idx].Id);
-                    if (!_vehicleService.AppendRoute(vehicle, route));
-                    takenCapacity += orders[idx].PackageWeight;
-                    idx++;
+                   await _route.Add(new Route {Order = orders[idx]});
+                   var routeList =  await _route.GetAll();
+                   var route = routeList.Find(r => r.Order.Id == orders[idx].Id);
+                   if (!await _vehicleService.AppendRoute(vehicle, route))
+                   {
+                       takenCapacity += orders[idx].PackageWeight;
+                       idx++;
+                   }
                 }
 
                 takenCapacity = 0;
