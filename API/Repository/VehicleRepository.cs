@@ -14,7 +14,7 @@ namespace API.Repository
 
         public bool StationExists(int id)
         {
-            return _context.Stations.Any(s => s.Id == id);
+            return Context.Stations.Any(s => s.Id == id);
         }
     }
 }

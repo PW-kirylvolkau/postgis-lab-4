@@ -9,27 +9,27 @@ namespace API.Repository
         where TEntity: class, IEntity
         where TContext: DbContext
     {
-        protected readonly TContext _context;
+        protected readonly TContext Context;
 
         protected AppRepository(TContext context)
         {
-            _context = context;
+            Context = context;
         }
         
         public async Task<TEntity> GetById(int id)
         {
-            return await _context.Set<TEntity>().FindAsync(id);
+            return await Context.Set<TEntity>().FindAsync(id);
         }
 
         public async Task<List<TEntity>> GetAll()
         {
-            return await _context.Set<TEntity>().ToListAsync();
+            return await Context.Set<TEntity>().ToListAsync();
         }
 
         public async Task<TEntity> Add(TEntity entity)
         {
-            var entry = await _context.Set<TEntity>().AddAsync(entity);
-            await _context.SaveChangesAsync();
+            var entry = await Context.Set<TEntity>().AddAsync(entity);
+            await Context.SaveChangesAsync();
             return entry.Entity;
         }
 
@@ -41,15 +41,15 @@ namespace API.Repository
                 return null;
             }
 
-            _context.Set<TEntity>().Remove(entity);
-            await _context.SaveChangesAsync();
+            Context.Set<TEntity>().Remove(entity);
+            await Context.SaveChangesAsync();
             return entity;
         }
 
         public async Task<TEntity> Update(TEntity entity)
         {
-            _context.Entry(entity).State = EntityState.Modified;
-            await _context.SaveChangesAsync();
+            Context.Entry(entity).State = EntityState.Modified;
+            await Context.SaveChangesAsync();
             return entity;
         }
     }

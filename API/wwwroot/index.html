@@ -20,7 +20,6 @@
 
     <title>Delivery company</title>
     <script src="order_formMethods.js"></script>
-    <script src="vehicle_formMethods.js"></script>
 
     <!-- Leaflet script -->
     <script src="https://unpkg.com/leaflet@1.7.1/dist/leaflet.js"
@@ -258,154 +257,141 @@
             </div>
         </div>
     </div>
-    <!--Load Table for orders as well as the list of orders to click on-->
-    <script src="order_list_fill.js"></script>
-    <script type="text/javascript">
-        getOrders();
-    </script>
-    <!--Script to add geoapify textbox elements to the edit forms-->
-    <script src="general_geoapify.js"></script>
     <div class="tab-pane fade" id="order" role="tabpanel" aria-labelledby="order-tab">
-        <form id="newOrderForm" action="javascript:void(0);" onsubmit="addNewOrder()">
-            <div class="container p-3 my-3 border">
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col">
-                            <h3>Personal Information</h3>
-                            <p>Provide Personal Information</p>
-                            <div class="row">
-                                <div class="col-3">
-                                    <label class="low_labels" for="sender_name">NAME</label>
+        <div class="card m-3">
+            <div class="card-body">
+                <form id="newOrderForm" action="javascript:void(0);" onsubmit="addNewOrder()">
+                        <div class="row">
+                            <div class="col">
+                                <h3>Personal Information</h3>
+                                <p>Provide Personal Information</p>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="low_labels" for="sender_name">NAME</label>
+                                    </div>
+                                    <div class="col">
+                                        <input class="form-control" id="sender_name" type="text" name="sender_name">
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <input class="form-control" id="sender_name" type="text" name="sender_name">
+                                <br/>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="low_labels" for="sender_surname">SURNAME</label>
+                                    </div>
+                                    <div class="col">
+                                        <input class="form-control" id="sender_surname" type="text" name="sender_surname">
+                                    </div>
                                 </div>
+                                <br/>
                             </div>
-                            <br/>
-                            <div class="row">
-                                <div class="col-3">
-                                    <label class="low_labels" for="sender_surname">SURNAME</label>
+                            <div class="col">
+                                <h3>Recipient Information</h3>
+                                <p>Please provide information about the person who receives the package</p>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="low_labels" for="recipient_name">NAME</label>
+                                    </div>
+                                    <div class="col">
+                                        <input class="form-control" id="recipient_name" type="text" name="recipient_name"/>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <input class="form-control" id="sender_surname" type="text" name="sender_surname">
+                                <br/>
+                                <div class="row">
+                                    <div class="col-3">
+                                        <label class="low_labels" for="recipient_surname">SURNAME</label>
+                                    </div>
+                                    <div class="col">
+                                        <input class="form-control" id="recipient_surname" type="text"
+                                               name="recipient_surname"/>
+                                    </div>
                                 </div>
+                                <br/>
                             </div>
-                            <br/>
                         </div>
-                        <div class="col">
-                            <h3>Recipient Information</h3>
-                            <p>Please provide information about the person who receives the package</p>
+                        <br/>
+                        <br/>
+                        <h3>Package Details</h3>
+                        <br/>
+                        <div class="row">
+                            <div class="col-3">
+                                <label class="low_labels" for="pweight">WEIGHT(KG)</label>
+                            </div>
+                            <div class="col">
+                                <input class="form-control" style="width:50%" type="number" name="pweight" id="pweight"
+                                       min="1" max="100" value="1">
+                            </div>
+                        </div>
+                    <br/>
+                    <div class="card m-3">
+                        <div class="card-header">
+                            <h5 class="card-title text-center">Select how you want to choose the order's addresses</h5>
+                            <div class="card-body text-center">
+                                <button type="button" id="hand-button" class="btn btn-primary" onclick="onHandButtonClick()">
+                                    Hand selection
+                                </button>
+                                <button type="button" id="text-button" class="btn btn-secondary" onclick="onTextButtonClick()">
+                                    Text selection
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body">
                             <div class="row">
-                                <div class="col-3">
-                                    <label class="low_labels" for="recipient_name">NAME</label>
+                                <div class="col-8">
+                                    <div class="map-wrapper">
+                                        <div id="mapid"></div>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <input class="form-control" id="recipient_name" type="text" name="recipient_name"/>
+                                <div class="col-4">
+                                    <div class="card text-dark bg-light mb-10 pr-10" style="max-width: 50rem">
+                                        <div class="card-body">
+                                            <h5 class="card-header">Select package delivery endpoints</h5>
+                                            <br/>
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input type="radio" id="fromRadio" name="delivery" class="custom-control-input"
+                                                       checked="checked" onclick="mode=modes.from"/>
+                                                <label class="custom-control-label" for="fromRadio">From</label>
+                                            </div>
+                                            <div class="custom-control custom-radio custom-control-inline">
+                                                <input type="radio" name="delivery" id="toRadio" class="custom-control-input"
+                                                       onclick="mode=modes.to"/>
+                                                <label class="custom-control-label" for="toRadio">To</label>
+                                            </div>
+                                            <br/>
+                                            <br/>
+                                            <h5 class="card-title">Selected points should be shown as addresses in the
+                                                corresponing boxes.</h5>
+                                            <!--Inputs for inserting addresses in form of text (contains geoapify code)-->
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label>From</label>
+                                                    <div class="autocomplete-container" id="autocomplete-container-from"></div>
+                                                    <input type="hidden" id="fromLatCoords"/>
+                                                    <input type="hidden" id="fromLngCoords"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="form-group col-md-12">
+                                                    <label>To</label>
+                                                    <div class="autocomplete-container" id="autocomplete-container-to"></div>
+                                                    <input type="hidden" id="toLatCoords" />
+                                                    <input type="hidden" id="toLngCoords" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
-                            <br/>
-                            <div class="row">
-                                <div class="col-3">
-                                    <label class="low_labels" for="recipient_surname">SURNAME</label>
-                                </div>
-                                <div class="col">
-                                    <input class="form-control" id="recipient_surname" type="text"
-                                           name="recipient_surname"/>
-                                </div>
-                            </div>
-                            <br/>
+
                         </div>
                     </div>
-                    <br/>
-                    <br/>
-                    <h3>Package Details</h3>
-                    <br/>
-                    <div class="row">
-                        <div class="col-3">
-                            <label class="low_labels" for="pweight">WEIGHT(KG)</label>
-                        </div>
-                        <div class="col">
-                            <input class="form-control" style="width:50%" type="number" name="pweight" id="pweight"
-                                   min="1" max="100" value="1">
-                        </div>
-                    </div>
-                </div>
-                <br/>
-                <div class="card">
-                    <h5 class="card-title text-center">Select how you want to choose the order's addresses</h5>
                     <div class="card-body text-center">
-                        <button type="button" id="hand-button" class="btn btn-primary" onclick="onHandButtonClick()">
-                            Hand selection
-                        </button>
-                        <button type="button" id="text-button" class="btn btn-secondary" onclick="onTextButtonClick()">
-                            Text selection
-                        </button>
+                        <input class="btn btn-primary" type="submit" value="Add New Order"/>
                     </div>
-                    <div class="card-body row">
-                        <div class="col-8">
-                            <button type="button" class="btn btn-primary location-button" id="location-button"
-                                    onclick="getCurrentLocation()">Get my location
-                            </button>
-                            <br/>
-                            <br/>
-                            <div class="map-wrapper">
-                                <div id="mapid"></div>
-                            </div>
-                            <!--Script for map in orders-->
-                            <!--<script src="map_no_code.js"></script>-->
-                        </div>
-                        <div class="col-4">
-                            <div class="card text-dark bg-light mb-10 pr-10" style="max-width: 50rem">
-                                <div class="card-body">
-                                    <h5 class="card-header">Select package delivery endpoints</h5>
-                                    <br/>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" id="fromRadio" name="delivery" class="custom-control-input"
-                                               checked="checked" onclick="mode=modes.from"/>
-                                        <label class="custom-control-label" for="fromRadio">From</label>
-                                    </div>
-                                    <div class="custom-control custom-radio custom-control-inline">
-                                        <input type="radio" name="delivery" id="toRadio" class="custom-control-input"
-                                               onclick="mode=modes.to"/>
-                                        <label class="custom-control-label" for="toRadio">To</label>
-                                    </div>
-                                    <br/>
-                                    <br/>
-                                    <select id="country" class="form-control"
-                                            onchange="getCountryCoords(this.value)"></select>
-                                    <br/>
-                                    <h5 class="card-title">Selected points should be shown as addresses in the
-                                        corresponing boxes.</h5>
-                                    <!--Inputs for inserting addresses in form of text (contains geoapify code)-->
-                                    <div class="form-row">
-                                        <div class="form-group col-md-12">
-                                            <label for="fromAddress">From</label>
-                                            <div class="autocomplete-container" id="autocomplete-container-from"></div>
-                                            <input type="hidden" id="fromLatCoords" value="44"/>
-                                            <input type="hidden" id="fromLngCoords" value="44"/>
-                                        </div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="form-group col-md-12">
-                                            <label for="toAddress">To</label>
-                                            <div class="autocomplete-container" id="autocomplete-container-to"></div>
-                                            <input type="hidden" id="toLatCoords" value="44"/>
-                                            <input type="hidden" id="toLngCoords" value="44"/>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="card-body text-center">
-                    <input class="btn btn-primary" type="submit" value="Add New Order"/>
-                </div>
+                </form>
             </div>
-        </form>
+        </div>
+       
     </div>
-    <!--Create and add the textbox elements for geoapify in the New Order Tab-->
-    <script src="newOrder_geoapify.js"></script>
     <div class="tab-pane fade" id="admin" role="tabpanel" aria-labelledby="admin-tab">
         <div class="card m-3">
             <div class="card-header">
@@ -525,6 +511,5 @@
 <script src="./pages/admin.page.js"></script>
 <script src="./pages/orders.page.js"></script>
 <script src="index.js"></script>
-<script src="order_visuals.js"></script>
 </body>
 </html>

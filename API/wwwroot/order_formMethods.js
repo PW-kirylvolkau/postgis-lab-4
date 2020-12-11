@@ -22,60 +22,6 @@ function getOrder(id) {
         .catch(error => console.error('Unable to get order.', error));
 }
 
-//POST Orders
-function addNewOrder() {
-    //All necessary forms
-    const sNameTextbox = document.getElementById('sender_name');
-    const sSurnameTextbox = document.getElementById('sender_surname');
-    const rNameTextbox = document.getElementById('recipient_name');
-    const rSurnameTextbox = document.getElementById('recipient_surname');
-    const pWeightTextbox = document.getElementById('pweight');
-    const fromAddressTextbox = document.getElementById('fromAddress');
-    const toAddressTextbox = document.getElementById('toAddress');
-    const fromLatTextbox = document.getElementById('fromLatCoords');
-    const fromLngTextbox = document.getElementById('fromLngCoords');
-    const toLatTextbox = document.getElementById('toLatCoords');
-    const toLngTextbox = document.getElementById('toLngCoords');
-    //Validation here
-
-    const newOrder = {
-        sender: sNameTextbox.value.trim() + " " + sSurnameTextbox.value.trim(),
-        recipient: rNameTextbox.value.trim() + " " + rSurnameTextbox.value.trim(),
-        pickupAddress: fromAddressTextbox.value.trim(),
-        deliveryAddress: toAddressTextbox.value.trim(),
-        packageWeight: parseFloat(pWeightTextbox.value.trim()),
-        pickupLat: parseFloat(fromLatTextbox.value.trim()),
-        pickupLng: parseFloat(fromLngTextbox.value.trim()),
-        deliveryLat: parseFloat(toLatTextbox.value.trim()),
-        deliveryLng: parseFloat(toLngTextbox.value.trim())
-    };
-
-    fetch(uri, {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(newOrder)
-    })
-        .then(() => {
-            getOrders();
-            sNameTextbox.value = '';
-            sSurnameTextbox.value = '';
-            rNameTextbox.value = '';
-            rSurnameTextbox.value = '';
-            fromAddressTextbox.value = '';
-            fromLatTextbox.value = '';
-            fromLngTextbox.value = '';
-            toAddressTextbox.value = '';
-            toLatTextbox.value = '';
-            toLngTextbox.value = '';
-            pWeightTextbox.value = 1;
-        })
-        .catch(error => console.error('Unable to add order.', error));
-    addListItems();
-}
-
 
 //Display the edit form
 function displayEditForm(id) {

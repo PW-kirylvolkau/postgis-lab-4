@@ -18,5 +18,4 @@ function addStation(payload, callback) {
                callback(response);
             })
             .catch(error => toastr.error(`Error encountered: ${error}`));
-    
 }
