@@ -40,16 +40,14 @@ namespace API.Services
             foreach (var vehicle in await _vehicle.GetAll())
             {
                 await _vehicleService.ResetRoutes(vehicle);
-                while (takenCapacity <= vehicle.Capacity && idx < orders.Count)
+                while (takenCapacity < vehicle.Capacity && idx < orders.Count-1)
                 {
                    await _route.Add(new Route {Order = orders[idx]});
                    var routeList =  await _route.GetAll();
                    var route = routeList.Find(r => r.Order.Id == orders[idx].Id);
-                   if (!await _vehicleService.AppendRoute(vehicle, route))
-                   {
-                       takenCapacity += orders[idx].PackageWeight;
-                       idx++;
-                   }
+                   await _vehicleService.AppendRoute(vehicle, route);
+                   takenCapacity += orders[idx].PackageWeight;
+                   idx++;
                 }
 
                 takenCapacity = 0;

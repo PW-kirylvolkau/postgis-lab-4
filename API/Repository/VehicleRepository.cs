@@ -23,8 +23,9 @@ namespace API.Repository
         {
             return await Context.Vehicles
                 .Include(v => v.Station)
+                .Include(v => v.Routes)
+                .ThenInclude(r=>r.Order)
                 .ToListAsync();
-
         }
     }
 }

@@ -32,7 +32,7 @@ const markerSettings = {
 let mode = modes.from;
 
 const initOrdersMap = () => {
-    ordersMap = initMap('mapid', ordersMap);
+    ordersMap = initMap('mapid');
     addMapEventHandlers();
 }
 
@@ -185,11 +185,11 @@ function addPolyline() {
         ]);
     }
     else {
-        if(toMarker){
+        if(toMarker && fromMarker){
             polyline = L.polyline([fromMarker.getLatLng(), toMarker.getLatLng()], { color: 'red' }).addTo(ordersMap);
         }
     }
-    if(toMarker) {
+    if(toMarker && fromMarker) {
         ordersMap.fitBounds(polyline.getBounds());
     }
 }

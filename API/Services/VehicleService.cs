@@ -9,15 +9,17 @@ namespace API.Services
     public class VehicleService
     {
         private readonly VehicleRepository _vehicle;
+        private readonly RouteRepository _route;
 
-        public VehicleService(VehicleRepository vehicle)
+        public VehicleService(VehicleRepository vehicle, RouteRepository route)
         {
             _vehicle = vehicle;
+            _route = route;
         }
 
         public async Task<bool> AppendRoute(Vehicle vehicle, Route route)
         {
-            if (vehicle.Routes.Count == 0)
+            if (vehicle.Routes == null)
             {
                 vehicle.Routes = new List<Route> {route};
             }
@@ -30,7 +32,17 @@ namespace API.Services
 
         public async Task<bool> ResetRoutes(Vehicle vehicle)
         {
-            vehicle.Routes = new List<Route>();
+            if (vehicle.Routes != null)
+            {
+                foreach (var route in vehicle.Routes)
+                {
+                    await _route.Delete(route.Id);
+                }
+            }
+            else
+            {
+                vehicle.Routes = new List<Route>();
+            }
             return await _vehicle.Update(vehicle) == null;
         }
     }

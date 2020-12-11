@@ -1,6 +1,6 @@
-function initMap(mapId, mapVar) {
-    mapVar = L.map(mapId, {
-        center: [0, 0],
+function initMap(mapId) {
+    const mapVar = L.map(mapId, {
+        center: [53.893009, 27.567444],
         zoom: 10
     });
     L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/streets-v11/tiles/{z}/{x}/{y}?access_token=' + MAPBOX_ACCESS_TOKEN, {

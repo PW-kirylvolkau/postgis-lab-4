@@ -1,5 +1,18 @@
 let generalMap;
-const initGeneralMap = () => initMap('map-general', generalMap);
+let lines = [];
+let markers = [];
+const initGeneralMap = () => initMap('map-general');
+
+const colors = Object.freeze({
+    red: 'red',
+    green: 'green',
+    blue: 'blue'
+});
+
+const randomColor = () => {
+    const keys = Object.keys(colors);
+    return colors[keys[ keys.length * Math.random() << 0]];
+};
 
 function initGeneralPage() {
     addressAutocomplete(document.getElementById("autocomplete-container-pickup-edit"), (data) => {
@@ -25,26 +38,27 @@ function initGeneralPage() {
     }, 'deliveryAddress-edit');
 
     document.getElementById('deliveryAddress-edit').disabled = false;
-    initGeneralMap();
+    generalMap = initGeneralMap();
     displayRoutes();
 }
 
 function displayRoutes() {
-    if(generalMap) {
-        generalMap.eachLayer((layer) => {
-            layer.remove();
-        });
-    }
-    initGeneralMap();
     getVehicles(addRoutesToMap);
 }
 
 function addRoutesToMap(vehicles) {
+    clearMap();
     for(const vehicle of vehicles) {
-        L.marker([vehicle.station.lat, vehicle.station.lng]).addTo(generalMap);
+        const stationMarker = L.marker([vehicle.station.lat, vehicle.station.lng])
+            .bindPopup(`Station ${vehicle.station.id}`)
+            .openPopup();
+        stationMarker.addTo(generalMap);
+        markers.push(stationMarker);
         let routes = [
-            vehicle.station.lat,
-            vehicle.station.lng
+            [
+                vehicle.station.lat,
+                vehicle.station.lng
+            ]
         ];
         for(const route of vehicle.routes)
         {
@@ -53,12 +67,29 @@ function addRoutesToMap(vehicles) {
                 .bindPopup(`<b>Pickup order ${order.id}</b><br>I am a popup.`).openPopup();
             const deliveryMarker = L.marker([order.deliveryLat, order.deliveryLng])
                 .bindPopup(`<b>Delivery order ${order.id}</b><br>I am a popup.`).openPopup();
+            
+            markers.push(pickupMarker, deliveryMarker);
 
             pickupMarker.addTo(generalMap);
             deliveryMarker.addTo(generalMap);
-            routes.push(order.pickupLat, order.pickupLng,order.deliveryLat, order.deliveryLng);
+            routes.push([order.pickupLat, order.pickupLng] , [order.deliveryLat, order.deliveryLng]);
         }
-        routes.push(vehicle.station.lat, vehicle.station.lng);
-        L.polyline(routes, {color: 'red'}).addTo(generalMap);
+        routes.push([vehicle.station.lat, vehicle.station.lng]);
+        const pl = L.polyline(routes, {color: randomColor()}).addTo(generalMap);
+        lines.push(pl);
     }
 }
+
+function clearMap() {
+    for(let marker of markers) {
+        marker.remove();
+    }
+    markers = [];
+    for(let line of lines) {
+        line.remove();
+    }
+    lines = [];
+}
+// TODO
+function clearOrdersTable() {}
+function addRouteToTable(vehicle) {}

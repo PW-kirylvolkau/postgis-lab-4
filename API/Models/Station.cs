@@ -18,10 +18,10 @@ namespace API.Models
         [Required]
         public string Address { get; set; }
         
-        [Required, Range(-90, 90)]
+        [Required]
         public double Lat { get; set; }
 
-        [Required, Range(-180, 180)]
+        [Required]
         public double Lng { get; set; }
         
         public ICollection<Vehicle> Vehicles { get; set; }

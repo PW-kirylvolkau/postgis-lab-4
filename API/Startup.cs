@@ -67,7 +67,14 @@ namespace API
 
             app.UseAuthorization();
 
-            app.UseEndpoints(endpoints => { endpoints.MapControllers(); });
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+                endpoints.MapGet("/", async (context) =>
+                {
+                    context.Response.Redirect("/index.html");
+                });
+            });
         }
     }
 }
