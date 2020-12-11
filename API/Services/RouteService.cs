@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using API.Models;
 using API.Repository;
 
@@ -32,7 +33,7 @@ namespace API.Services
             }
         }
 
-        public async void RecomputeRoutes()
+        public async Task RecomputeRoutes()
         {
             var idx = 0;
             var orders = await _order.GetAll();
@@ -40,9 +41,9 @@ namespace API.Services
             foreach (var vehicle in await _vehicle.GetAll())
             {
                 await _vehicleService.ResetRoutes(vehicle);
-                while (takenCapacity < vehicle.Capacity && idx < orders.Count-1)
+                while (takenCapacity < vehicle.Capacity && idx < orders.Count)
                 {
-                   await _route.Add(new Route {Order = orders[idx]});
+                   var _ = await _route.Add(new Route {Order = orders[idx]});
                    var routeList =  await _route.GetAll();
                    var route = routeList.Find(r => r.Order.Id == orders[idx].Id);
                    await _vehicleService.AppendRoute(vehicle, route);

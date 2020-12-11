@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using API.Data;
 using API.Repository;
 using API.Services;
@@ -29,7 +30,7 @@ namespace API
             });
             services.AddDbContext<ApplicationContext>(options =>
             {
-               // options.UseNpgsql(Configuration.GetConnectionString("PG"));
+               //options.UseNpgsql(Configuration.GetConnectionString("PG"));
                options.UseInMemoryDatabase("routes");
             });
             
@@ -40,7 +41,7 @@ namespace API
 
             services.AddScoped<RouteService>();
             services.AddScoped<VehicleService>();
-            
+
             services.AddSwaggerGen();
         }
 
@@ -72,7 +73,7 @@ namespace API
                 endpoints.MapControllers();
                 endpoints.MapGet("/", async (context) =>
                 {
-                    context.Response.Redirect("/index.html");
+                    await Task.Run(() => context.Response.Redirect("/index.html"));
                 });
             });
         }

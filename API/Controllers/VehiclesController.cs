@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using API.Models;
 using API.Repository;
@@ -46,7 +47,7 @@ namespace API.Controllers
                 });
             }
             var added = await _repository.Add(vehicle);
-            _routeService.RecomputeRoutes();
+            await _routeService.RecomputeRoutes();
             return CreatedAtAction(nameof(GetById), new {id = added.Id}, added);
         }
     }

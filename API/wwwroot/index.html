@@ -61,7 +61,7 @@
                href="#general" role="tab"
                aria-controls="general-tab"
                aria-selected="true"
-               onclick="updateAdminPage()"
+               onclick="updateGeneralPage()"
             >
                 General
             </a>
@@ -72,7 +72,7 @@
         </li>
         <li class="nav-item">
             <a class="nav-link" id="admin-tab" data-toggle="tab" href="#admin" role="tab" aria-controls="admin-tab"
-               aria-selected="false">Admin</a>
+               aria-selected="false" onclick="updateAdminPage()">Admin</a>
         </li>
     </ul>
 </nav>
@@ -163,7 +163,7 @@
             <div class="card">
                 <h3 class="card-title">Edit Order</h3>
                 <div class="card-body">
-                    <form action="javascript:void(0);" onsubmit="updateOrder()">
+                    <form action="javascript:void(0);" onsubmit="updateOrderFromMenu()">
                         <!--Edit Form (still need to add exactly what will be available to edit, as well as the function to update info)-->
                         <div class="container p-3 my-3">
                             <input type="hidden" id="edit-id"/>
@@ -222,7 +222,7 @@
                                         </div>
                                         <div class="col">
                                             <input type="number" name="packageWeight-edit" id="packageWeight-edit"
-                                                   min="1" max="100" value="1">
+                                                   min="1" max="500" value="1">
                                         </div>
                                     </div>
                                 </div>
@@ -235,18 +235,22 @@
         </div>
         <div class="container p-3 my-3">
             <div class="card">
-                <h3 class="card-title">Order Table</h3>
+                <div class="card-header">
+                    <h3>Order Table</h3>
+                </div>
                 <div class="card-body">
                     <!--Table that displays all current orders in the database-->
                     <table class="table">
                         <thead>
                         <tr>
-                            <th scope="col"># of order</th>
+                            <th scope="col">#</th>
                             <th scope="col">Sender</th>
                             <th scope="col">Recipient</th>
                             <th scope="col">Pickup Address</th>
                             <th scope="col">Delivery Address</th>
                             <th scope="col">Weight</th>
+                            <th scope="col">Vehicle Id</th>
+                            <th scope="col">Station Id</th>
                             <th scope="col"></th>
                             <th scope="col"></th>
                         </tr>
@@ -494,6 +498,7 @@
                                         <th scope="col">#</th>
                                         <th scope="col">Name</th>
                                         <th scope="col">Station</th>
+                                        <th scope="col">Capacity</th>
                                     </tr>
                                     </thead>
                                     <tbody id="vehicle_table"></tbody>

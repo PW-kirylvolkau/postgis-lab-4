@@ -61,6 +61,10 @@ function setVehiclesTable(vehicles) {
         const td3 = tr.insertCell(2);
         const station_id = document.createTextNode(vehicle.stationId);
         td3.appendChild(station_id);
+
+        const td4 = tr.insertCell(3);
+        const capacity = document.createTextNode(vehicle.capacity);
+        td4.appendChild(capacity);
     });
 }
 

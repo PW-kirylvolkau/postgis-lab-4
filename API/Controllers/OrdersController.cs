@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using System.Threading;
 using System.Threading.Tasks;
 using API.Models;
 using API.Repository;
@@ -34,8 +35,7 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
-
-            _routeService.RecomputeRoutes();
+            await _routeService.RecomputeRoutes();
             return CreatedAtAction(nameof(GetById), new {id = added.Id}, added);
         }
 
@@ -47,7 +47,7 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
-            _routeService.RecomputeRoutes();
+            await _routeService.RecomputeRoutes();
             return StatusCode(200);
         }
 
@@ -65,7 +65,7 @@ namespace API.Controllers
             {
                 return BadRequest();
             }
-            _routeService.RecomputeRoutes();
+            await _routeService.RecomputeRoutes();
             return StatusCode(204);
         }
         
