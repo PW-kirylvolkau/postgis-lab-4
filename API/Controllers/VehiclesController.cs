@@ -38,7 +38,6 @@ namespace API.Controllers
         [HttpPost]
         public async Task<IActionResult> Add([FromBody] Vehicle vehicle)
         {
-            Console.WriteLine(vehicle.ToString());
             if (!_repository.StationExists(vehicle.StationId))
             {
                 return BadRequest(new
