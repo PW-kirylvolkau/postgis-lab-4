@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace API.Models
 {
     [Table("vehicles", Schema = "public")]
-    public class Vehicle
+    public class Vehicle : IEntity
     {
         [Key]
         public int Id { get; set; }

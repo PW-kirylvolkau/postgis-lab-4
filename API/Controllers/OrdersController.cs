@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
-using API.Data.Dao;
+using System.Threading.Tasks;
 using API.Models;
+using API.Repository;
 using API.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,57 +11,62 @@ namespace API.Controllers
     [Route("api/Orders")]
     public class OrdersController : ControllerBase
     {
-        private readonly OrderDao _dao;
         private readonly RouteService _routeService;
+        private readonly OrderRepository _repository;
 
-        public OrdersController(OrderDao dao, RouteService routeService)
+        public OrdersController(RouteService routeService, OrderRepository repository)
         {
-            _dao = dao;
             _routeService = routeService;
+            _repository = repository;
         }
 
         [HttpGet]
-        public IEnumerable<Order> GetAll()
+        public async Task<IEnumerable<Order>> GetAll()
         {
-            return _dao.GetAll();
+            return await _repository.GetAll();
         }
 
         [HttpPost]
-        public ActionResult Add([FromBody] Order order)
+        public async Task<IActionResult> Add([FromBody] Order order)
         {
-            if (!_dao.Add(order)) return BadRequest();
+            var added = await _repository.Add(order);
+            if (added == null)
+            {
+                return BadRequest();
+            }
+
             _routeService.RecomputeRoutes();
-            return Ok();
+            return CreatedAtAction(nameof(GetById), new {id = added.Id}, added);
         }
-        /// <summary>
-        /// So, if our server when trying to delete the existing order gives us an error it means that the server is...
-        /// a teapot.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
+
         [HttpDelete("{id}")]
-        public ActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var order = _dao.Get(id);
-            if (order == null) return NotFound();
-            var res = _dao.Delete(order) ? NoContent() : StatusCode(418);
+            var deleted = await _repository.Delete(id);
+            if (deleted == null)
+            {
+                return BadRequest();
+            }
             _routeService.RecomputeRoutes();
-            return res;
+            return StatusCode(200);
         }
 
         [HttpGet("{id}")]
-        public ActionResult<Order> GetOrder(int id)
+        public async Task<Order> GetById(int id)
         {
-            var order = _dao.Get(id);
-            if (order == null) return NotFound();
-            return order;
+            return await _repository.GetById(id);
         }
 
         [HttpPut("{id}")]
-        public ActionResult<Order> UpdateOrder([FromBody] Order order)
+        public async Task<IActionResult> UpdateOrder([FromBody] Order order)
         {
-            if (!_dao.Update(order)) return BadRequest();
-            return _dao.Get(order.Id);
+            var updated = await _repository.Update(order);
+            if (updated == null)
+            {
+                return BadRequest();
+            }
+            _routeService.RecomputeRoutes();
+            return StatusCode(204);
         }
         
     }

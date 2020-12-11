@@ -9,4 +9,16 @@ function initMap(mapId, mapVar) {
         zoomOffset: -1
     }).addTo(mapVar);
     L.control.scale().addTo(mapVar);
+    return mapVar;
+}
+
+function setMarker(coords, mapVar, text) {
+    const marker = new L.marker(coords);
+    marker.bindPopup(text).openPopup();
+    marker.addTo(mapVar);
+    return marker;
+}
+
+function addMapEventHandler(mapVar, event, handler) {
+    mapVar.on(event, (e) => handler(e));
 }

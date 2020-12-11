@@ -2,8 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using API.Data.Dao;
 using API.Models;
+using API.Repository;
 using API.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -14,31 +14,41 @@ namespace API.Controllers
     [Route("api/[controller]")]
     public class VehiclesController : ControllerBase
     {
-        private readonly VehicleDao _dao;
         private readonly RouteService _routeService;
+        private readonly VehicleRepository _repository;
         
-        public VehiclesController(VehicleDao dao, RouteService routeService )
+        public VehiclesController(VehicleRepository repository, RouteService routeService )
         {
-            _dao = dao;
             _routeService = routeService;
+            _repository = repository;
         }
 
         [HttpGet]
-        public IEnumerable<Vehicle> GetAll()
+        public async Task<IEnumerable<Vehicle>> GetAll()
         {
-            return _dao.GetAll();
+            return await _repository.GetAll();
+        }
+        
+        [HttpGet("{id}")]
+        public async Task<Vehicle> GetById(int id)
+        {
+            return await _repository.GetById(id);
         }
 
         [HttpPost]
-        public ActionResult Add(Vehicle vehicle)
+        public async Task<IActionResult> Add([FromBody] Vehicle vehicle)
         {
-            Console.WriteLine(ModelState.IsValid);
-            
-            if (!ModelState.IsValid) return BadRequest();
-       
-            var res = _dao.Add(vehicle) ? Ok() : StatusCode(400);
+            Console.WriteLine(vehicle.ToString());
+            if (!_repository.StationExists(vehicle.StationId))
+            {
+                return BadRequest(new
+                {
+                    error = new {message = "Provide correct station id."}
+                });
+            }
+            var added = await _repository.Add(vehicle);
             _routeService.RecomputeRoutes();
-            return res;
+            return CreatedAtAction(nameof(GetById), new {id = added.Id}, added);
         }
     }
 }

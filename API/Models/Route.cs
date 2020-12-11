@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace API.Models
 {
     [Table("routes", Schema = "public")]
-    public class Route
+    public class Route : IEntity
     {
         [Key]
         public int Id { get; set; }

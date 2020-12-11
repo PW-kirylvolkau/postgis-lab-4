@@ -1,26 +1,21 @@
 using System.Collections.Generic;
 using System.Linq;
-using API.Data.Dao;
+using System.Threading.Tasks;
 using API.Models;
+using API.Repository;
 
 namespace API.Services
 {
     public class VehicleService
     {
-        private readonly OrderDao _order;
-        private readonly VehicleDao _vehicle;
-        private readonly RouteDao _route;
-        private readonly StationDao _station;
-        
-        public VehicleService(OrderDao order, VehicleDao vehicle, RouteDao route, StationDao station)
+        private readonly VehicleRepository _vehicle;
+
+        public VehicleService(VehicleRepository vehicle)
         {
-            _order = order;
             _vehicle = vehicle;
-            _route = route;
-            _station = station;
         }
 
-        public bool AppendRoute(Vehicle vehicle, Route route)
+        public async Task<bool> AppendRoute(Vehicle vehicle, Route route)
         {
             if (vehicle.Routes.Count == 0)
             {
@@ -30,13 +25,13 @@ namespace API.Services
             {
                 vehicle.Routes.Add(route);
             }
-            return _vehicle.Update(vehicle);
+            return await _vehicle.Update(vehicle) == null;
         }
 
-        public bool ResetRoutes(Vehicle vehicle)
+        public async Task<bool> ResetRoutes(Vehicle vehicle)
         {
-            vehicle.Routes.Clear();
-            return _vehicle.Update(vehicle);
+            vehicle.Routes = new List<Route>();
+            return await _vehicle.Update(vehicle) == null;
         }
     }
 }
